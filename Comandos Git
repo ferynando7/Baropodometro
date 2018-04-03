@@ -1,0 +1,6 @@
+Clonar el proyecto
+  git clone https://github.com/ferynando7/Baropodometro
+  
+Clonar una rama creada en GitHub (en este caso la rama "foo")
+  git fetch
+  git checkout --track -b foo origin/foo
