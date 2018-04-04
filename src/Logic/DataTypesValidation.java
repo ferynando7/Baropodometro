@@ -133,7 +133,7 @@ public class DataTypesValidation {
 
     
 
-    /*Validate names/
+    /*Validate names*/
     public String validateNames(String name) {
 
 
