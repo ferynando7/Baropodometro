@@ -27,7 +27,7 @@ public class DataTypesValidation {
     }
 
      */
- /*Validacion de la cédula*/
+ /*Validate IDs*/
     public String validateID(String id) {
 
         if (id.length() == 10) {
@@ -96,6 +96,7 @@ public class DataTypesValidation {
         }
     }
 
+    /*Validate names/
     public String validateNames(String name) {
 
         name = name.toLowerCase();
