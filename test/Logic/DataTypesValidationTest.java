@@ -18,10 +18,6 @@ import static org.junit.Assert.*;
 public class DataTypesValidationTest {
     
 
-
-    DataTypesValidation instance = new DataTypesValidation();
-    
-
     public DataTypesValidationTest() {
     }
     
@@ -42,14 +38,25 @@ public class DataTypesValidationTest {
 
         DataTypesValidation instance = new DataTypesValidation();
         
-
-
         assertEquals("Exception 002", instance.validateID("12345e"));
         assertEquals("Exception 002", instance.validateID("12345"));
         assertEquals("Exception 003", instance.validateID("1104136139"));
         assertEquals("1104136138", instance.validateID("1104136138"));
        
     }
+
+    
+    @Test
+    public void testValidateDouble (){
+        System.out.println("getTextWeight");
+        DataTypesValidation instance = new DataTypesValidation();
+        
+        assertEquals("Exception 001", instance.validateDouble("A23"));
+        assertEquals("45.6", instance.validateDouble("45.6"));
+        assertEquals("Exception 004", instance.validateDouble("-45.6"));
+
+    }
+
 
       
     @Test
@@ -72,5 +79,6 @@ public class DataTypesValidationTest {
        
     }
     
+
 
 }
