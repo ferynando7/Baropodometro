@@ -17,6 +17,8 @@ import static org.junit.Assert.*;
  */
 public class DataTypesValidationTest {
     
+    DataTypesValidation instance = new DataTypesValidation();
+    
     public DataTypesValidationTest() {
     }
     
@@ -34,14 +36,18 @@ public class DataTypesValidationTest {
     @Test
     public void testValidateID() {
         System.out.println("getTextID");
-        DataTypesValidation instance = new DataTypesValidation();
-        
-
-        
         assertEquals("Exception 002", instance.validateID("12345e"));
         assertEquals("Exception 002", instance.validateID("12345"));
         assertEquals("Exception 003", instance.validateID("1104136139"));
         assertEquals("1104136138", instance.validateID("1104136138"));
+       
+    }
+    
+    public void testValidateNames() {
+        System.out.println("getTextNames");
+        assertEquals("The name cannot be null", instance.validateNames(""));
+        assertEquals("Wrong format", instance.validateNames("Carlos@123"));
+        assertEquals("ok", instance.validateNames("Carlos"));
        
     }
     

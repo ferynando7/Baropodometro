@@ -10,8 +10,7 @@ package Logic;
  * @author ferynando7
  */
 public class DataTypesValidation {
- 
-    
+
     /*
     
     
@@ -27,98 +26,97 @@ public class DataTypesValidation {
        
     }
 
-    */
-    
-    
-    
-    /*Validacion de la cédula*/
-    
-        public String validateID(String id){
-       
-        if (id.length()==10){
-            if (isNumeric(id)){
+     */
+ /*Validacion de la cédula*/
+    public String validateID(String id) {
 
-                if(codProvCorrect(id) && digVerifCorrect(id) ){
+        if (id.length() == 10) {
+            if (isNumeric(id)) {
+
+                if (codProvCorrect(id) && digVerifCorrect(id)) {
                     return id;
-                }else{
+                } else {
                     return "Exception 003";
                 }
-            }else{
+            } else {
                 return "Exception 001";
             }
-        }else{
+        } else {
             return "Exception 002";
         }
     }
-    
-    
-    private static boolean isNumeric(String cadena){
-        try{
+
+    private static boolean isNumeric(String cadena) {
+        try {
             Integer.parseInt(cadena);
             return true;
-        }catch (NumberFormatException nfe){
+        } catch (NumberFormatException nfe) {
             return false;
         }
     }
-    
-    private static boolean codProvCorrect(String cadena){
-        String twoFirstDigits = cadena.substring(0,1);
+
+    private static boolean codProvCorrect(String cadena) {
+        String twoFirstDigits = cadena.substring(0, 1);
         int digits = Integer.parseInt(twoFirstDigits);
-        if((digits>0 && digits<25) || digits == 30){
+        if ((digits > 0 && digits < 25) || digits == 30) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
-    
-    private static boolean digVerifCorrect(String id){
+
+    private static boolean digVerifCorrect(String id) {
         int impar = 0;
         int par = 1;
-        int sumaImpares=0;
-        int sumaPares=0;
+        int sumaImpares = 0;
+        int sumaPares = 0;
         int total;
-        
-        for (int i = impar; i < 9;i=i+2){
-            int valueImpar = Character.getNumericValue(id.charAt(i))*2;
 
-            if(valueImpar <=10){ 
-                sumaImpares+= valueImpar;
-            }else{
-                sumaImpares+=valueImpar -9;
+        for (int i = impar; i < 9; i = i + 2) {
+            int valueImpar = Character.getNumericValue(id.charAt(i)) * 2;
+
+            if (valueImpar <= 10) {
+                sumaImpares += valueImpar;
+            } else {
+                sumaImpares += valueImpar - 9;
             }
         }
-        
-        for (int i = par; i<8;i=i+2 ){
+
+        for (int i = par; i < 8; i = i + 2) {
             int valuePar = Character.getNumericValue(id.charAt(i));
-             sumaPares += valuePar;
+            sumaPares += valuePar;
         }
-        
-        total = sumaImpares+sumaPares;
-        
-        if(10-total%10 == Character.getNumericValue(id.charAt(9))) return true;
-        else return false;
+
+        total = sumaImpares + sumaPares;
+
+        if (10 - total % 10 == Character.getNumericValue(id.charAt(9))) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    
-    public String validateNames(String name){
-        
+    public String validateNames(String name) {
+
+        name = name.toLowerCase();
         String alphabet = "abcdefghijklmnopqrstuvwxyzñáéíóú";
         int count = 0;
-        
-        for(int i=0; i<name.length(); i++){
-            if(alphabet.indexOf(name.charAt(i)) != -1){
-                count++;
+
+        if (name.isEmpty()) {
+            return "The name cannot be null";
+        } else {
+            for (int i = 0; i < name.length(); i++) {
+                if (alphabet.indexOf(name.charAt(i)) != -1) {
+                    count++;
+                }
+            }
+
+            if (count == name.length()) {
+                return "ok";
+            } else {
+                return "Wrong format";
             }
         }
-        
-        if(count == name.length()){
-            return "ok";
-        }else{
-            return "Wrong format";
-        }
     }
-    
-    
-    
-    
+
 }
