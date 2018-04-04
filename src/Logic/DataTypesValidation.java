@@ -114,7 +114,7 @@ public class DataTypesValidation {
             if (count == name.length()) {
                 return "ok";
             } else {
-                return "Wrong format";
+                return "Wrong name format";
             }
         }
     }
