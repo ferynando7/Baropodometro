@@ -292,7 +292,7 @@ public class NewPatient extends javax.swing.JFrame {
     public String getTextID(){
         return validate.validateID(ID.getText());
     }
-    
+
     public String getTextWeight(){
         return validate.validateDouble(Weight.getText());
     }
