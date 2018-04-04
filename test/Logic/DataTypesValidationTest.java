@@ -44,5 +44,15 @@ public class DataTypesValidationTest {
         assertEquals("1104136138", instance.validateID("1104136138"));
        
     }
-    
+      
+    @Test
+    public void testValidateHeight() {
+        System.out.println("getTextHeight");
+        DataTypesValidation instance = new DataTypesValidation();
+        
+        assertEquals("Valid", instance.validateIntegers("175",220));
+        assertEquals("Out of range", instance.validateIntegers("300",220));
+        assertEquals("Out of range", instance.validateIntegers("-29",220));
+        assertEquals("Non numeric", instance.validateIntegers("s34k",220));
+    }
 }

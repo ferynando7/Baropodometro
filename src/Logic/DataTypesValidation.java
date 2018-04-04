@@ -50,8 +50,18 @@ public class DataTypesValidation {
             return "Exception 002";
         }
     }
-    
-    
+        /* Integers Validation */ 
+        public String validateIntegers(String s, int limit) {
+            if(isNumeric(s)) {
+                if(Integer.parseInt(s)>0 && Integer.parseInt(s)<=limit) {
+                    return "Valid";
+                } else {
+                    return "Out of range";
+                }
+            }
+            return "Non numeric";
+        }
+      
     private static boolean isNumeric(String cadena){
         try{
             Integer.parseInt(cadena);
@@ -98,11 +108,4 @@ public class DataTypesValidation {
         if(10-total%10 == Character.getNumericValue(id.charAt(9))) return true;
         else return false;
     }
-
-    
-    
-    
-    
-    
-    
 }
