@@ -249,9 +249,8 @@ public class NewPatient extends javax.swing.JFrame {
             String apellido = LName.getText();
             String genero = Gender.getText();
             String fechNac = Birth.getText();
-            //String altura = Height.getText();
             String altura = getTextHeight();
-            String peso = Weight.getText();
+            String peso = getTextWeight();
             
             
             String values = "'" + cedula +  "','" + fechAnalisis + "','" + nombre + "','" + apellido + "','" + genero + "','" + fechNac + "'," + altura + "," + peso;
@@ -286,6 +285,7 @@ public class NewPatient extends javax.swing.JFrame {
     001: Tipo de dato no válido
     002: Longitud de cadena no válida
     003: Numero de cedula no valido
+    004: Valores negativos no aceptados
     
     
     */
@@ -293,16 +293,18 @@ public class NewPatient extends javax.swing.JFrame {
         return validate.validateID(ID.getText());
     }
 
+
+    public String getTextWeight(){
+        return validate.validateDouble(Weight.getText());
+
     
     public String getTextHeight() {
         return validate.validateIntegers(Height.getText(), 220);
+
     }
         
 
-    
-    
-    
-    
+   
 
     
 

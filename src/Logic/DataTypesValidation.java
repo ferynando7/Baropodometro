@@ -11,6 +11,7 @@ package Logic;
  */
 public class DataTypesValidation {
 
+<<<<<<< HEAD
  
     
 
@@ -24,6 +25,8 @@ public class DataTypesValidation {
 
     
     
+=======
+>>>>>>> f479b243c7b791ddaf801a8599a4a7e5b1191943
     
     /*Validacion de la cédula*/
     
@@ -44,6 +47,7 @@ public class DataTypesValidation {
             return "Exception 002";
         }
     }
+
         /* Integers Validation */ 
         public String validateIntegers(String s, int limit) {
             if(isNumeric(s)) {
@@ -56,6 +60,7 @@ public class DataTypesValidation {
             return "Non numeric";
         }
       
+
     private static boolean isNumeric(String cadena){
         try{
             Integer.parseInt(cadena);
@@ -103,6 +108,44 @@ public class DataTypesValidation {
         else return false;
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+
+/*Validation de doubles*/
+    
+    public String validateDouble(String peso){
+        if (isDouble(peso)){
+            double pesoenDouble=Double.parseDouble(peso);
+            if(pesoenDouble>0){
+               return peso; 
+            }else{
+                return "Exception 004";  
+                       }
+        }else{
+             return "Exception 001";
+        }
+       
+    }      
+    
+    private static boolean isDouble(String peso){
+        try{
+            Double.parseDouble(peso);
+            return true;
+        }catch (NumberFormatException nfe){
+            return false;
+        }
+    
+    }
+    
+    
+    
+    
+    
+    
+}
+
+>>>>>>> f479b243c7b791ddaf801a8599a4a7e5b1191943
     
      public String validateNames(String name) {
 =======
@@ -135,5 +178,6 @@ public class DataTypesValidation {
     
     
 }
+
 
 
