@@ -150,7 +150,7 @@ public class DataTypesValidation {
      public String validateNames(String name) {
 =======
 
-    /*Validate names/
+    /*Validate names*/
     public String validateNames(String name) {
 >>>>>>> carlosBranch
 
