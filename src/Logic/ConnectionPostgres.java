@@ -35,8 +35,7 @@ public class ConnectionPostgres {
             .getConnection("jdbc:postgresql://192.168.1.5:5432/baropodometro",
             "postgres", "1234");
         } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println(e.getClass().getName()+": "+e.getMessage());
+            System.err.println((new DBExceptions()).conexionError() + ": " + e.getMessage());
             System.exit(0);
         }
         
@@ -63,7 +62,7 @@ public class ConnectionPostgres {
             c.commit();
             c.close();
         } catch (Exception e) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            System.err.println((new DBExceptions()).insertionError() + ": " + e.getMessage());
             System.exit(0);
         }
         System.out.println("Records created successfully");
@@ -99,7 +98,7 @@ public class ConnectionPostgres {
             stmt.close();
             c.close();
         } catch ( Exception e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            System.err.println((new DBExceptions()).obtainingError() + ": " + e.getMessage());
             System.exit(0);
         }
         return datos;
@@ -119,7 +118,7 @@ public class ConnectionPostgres {
          stmt.close();
          c.close();
       } catch ( Exception e ) {
-         System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+         System.err.println((new DBExceptions()).deletingError() + ": " + e.getMessage());
          System.exit(0);
       }
       System.out.println("Operation done successfully");

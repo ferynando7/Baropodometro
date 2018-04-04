@@ -292,11 +292,20 @@ public class NewPatient extends javax.swing.JFrame {
     public String getTextID(){
         return validate.validateID(ID.getText());
     }
+
     
     public String getTextHeight() {
         return validate.validateIntegers(Height.getText(), 220);
     }
         
+
+    
+    
+    
+    
+
+    
+
     /**
      * @param args the command line arguments
      */
