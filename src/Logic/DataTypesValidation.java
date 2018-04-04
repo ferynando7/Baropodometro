@@ -100,7 +100,23 @@ public class DataTypesValidation {
     }
 
     
-    
+    public String validateNames(String name){
+        
+        String alphabet = "abcdefghijklmnopqrstuvwxyzñáéíóú";
+        int count = 0;
+        
+        for(int i=0; i<name.length(); i++){
+            if(alphabet.indexOf(name.charAt(i)) != -1){
+                count++;
+            }
+        }
+        
+        if(count == name.length()){
+            return "ok";
+        }else{
+            return "Wrong format";
+        }
+    }
     
     
     
