@@ -10,6 +10,7 @@ package Logic;
  * @author ferynando7
  */
 public class DataTypesValidation {
+
     
     /*Validacion de la cédula*/
     
@@ -30,8 +31,20 @@ public class DataTypesValidation {
             return "Exception 002";
         }
     }
-    
-    
+
+        /* Integers Validation */ 
+        public String validateIntegers(String s, int limit) {
+            if(isNumeric(s)) {
+                if(Integer.parseInt(s)>0 && Integer.parseInt(s)<=limit) {
+                    return "Valid";
+                } else {
+                    return "Out of range";
+                }
+            }
+            return "Non numeric";
+        }
+      
+
     private static boolean isNumeric(String cadena){
         try{
             Integer.parseInt(cadena);
@@ -79,6 +92,7 @@ public class DataTypesValidation {
         else return false;
     }
 
+
 /*Validation de doubles*/
     
     public String validateDouble(String peso){
@@ -111,3 +125,34 @@ public class DataTypesValidation {
     
     
 }
+
+    
+     public String validateNames(String name) {
+
+        name = name.toLowerCase();
+        String alphabet = "abcdefghijklmnopqrstuvwxyzñáéíóú";
+        int count = 0;
+
+        if (name.isEmpty()) {
+            return "The name cannot be null";
+        } else {
+            for (int i = 0; i < name.length(); i++) {
+                if (alphabet.indexOf(name.charAt(i)) != -1) {
+                    count++;
+                }
+            }
+
+            if (count == name.length()) {
+                return "ok";
+            } else {
+                return "Wrong name format";
+            }
+        }
+    }
+
+    
+    
+}
+
+
+

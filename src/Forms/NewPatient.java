@@ -249,7 +249,7 @@ public class NewPatient extends javax.swing.JFrame {
             String apellido = LName.getText();
             String genero = Gender.getText();
             String fechNac = Birth.getText();
-            String altura = Height.getText();
+            String altura = getTextHeight();
             String peso = getTextWeight();
             
             
@@ -293,14 +293,21 @@ public class NewPatient extends javax.swing.JFrame {
         return validate.validateID(ID.getText());
     }
 
+
     public String getTextWeight(){
         return validate.validateDouble(Weight.getText());
-    }
-    
-    
-    
 
     
+    public String getTextHeight() {
+        return validate.validateIntegers(Height.getText(), 220);
+
+    }
+        
+
+   
+
+    
+
     /**
      * @param args the command line arguments
      */
