@@ -32,7 +32,7 @@ public class DataTypesValidationTest {
      * Test of validateID method, of class DataTypesValidation.
      */
     @Test
-    public void testValidateID() {
+    /*public void testValidateID() {
         System.out.println("getTextID");
         DataTypesValidation instance = new DataTypesValidation();
         
@@ -43,6 +43,15 @@ public class DataTypesValidationTest {
         assertEquals("Exception 003", instance.validateID("1104136139"));
         assertEquals("1104136138", instance.validateID("1104136138"));
        
-    }
+    }*/
     
+    public void testValidateDouble (){
+        System.out.println("getTextWeight");
+        DataTypesValidation instance = new DataTypesValidation();
+        
+        assertEquals("Exception 001", instance.validateDouble("A23"));
+        assertEquals("45.6", instance.validateDouble("45.6"));
+        assertEquals("Exception 004", instance.validateDouble("-45.6"));
+
+    }
 }

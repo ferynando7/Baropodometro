@@ -10,26 +10,6 @@ package Logic;
  * @author ferynando7
  */
 public class DataTypesValidation {
- 
-    
-    /*
-    
-    
-     System.out.println("getTextID");
-        NewPatient instance = new NewPatient();
-        
-
-        
-        assertEquals("Exception 002", instance.getTextID("12345e"));
-        assertEquals("Exception 002", instance.getTextID("12345"));
-        assertEquals("Exception 003", instance.getTextID("1104136139"));
-        assertEquals("1104136138", instance.getTextID("1104136138"));
-       
-    }
-
-    */
-    
-    
     
     /*Validacion de la cédula*/
     
@@ -99,6 +79,31 @@ public class DataTypesValidation {
         else return false;
     }
 
+/*Validation de doubles*/
+    
+    public String validateDouble(String peso){
+        if (isDouble(peso)){
+            double pesoenDouble=Double.parseDouble(peso);
+            if(pesoenDouble>0){
+               return peso; 
+            }else{
+                return "Exception 004";  
+                       }
+        }else{
+             return "Exception 001";
+        }
+       
+    }      
+    
+    private static boolean isDouble(String peso){
+        try{
+            Double.parseDouble(peso);
+            return true;
+        }catch (NumberFormatException nfe){
+            return false;
+        }
+    
+    }
     
     
     
