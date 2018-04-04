@@ -11,6 +11,10 @@ package Logic;
  */
 public class DataTypesValidation {
 
+
+    
+    
+
     
     /*Validacion de la cédula*/
     
@@ -93,6 +97,7 @@ public class DataTypesValidation {
     }
 
 
+
 /*Validation de doubles*/
     
     public String validateDouble(String peso){
@@ -121,8 +126,16 @@ public class DataTypesValidation {
     
     
     
+
     
-     public String validateNames(String name) {
+}
+
+
+    
+
+    /*Validate names/
+    public String validateNames(String name) {
+
 
         name = name.toLowerCase();
         String alphabet = "abcdefghijklmnopqrstuvwxyzñáéíóú";
