@@ -15,6 +15,12 @@ public class DataTypesValidation {
     
 
 
+<<<<<<< HEAD
+=======
+     */
+ /*Validate IDs*/
+    public String validateID(String id) {
+>>>>>>> carlosBranch
 
     
     
@@ -96,8 +102,14 @@ public class DataTypesValidation {
         if(10-total%10 == Character.getNumericValue(id.charAt(9))) return true;
         else return false;
     }
+<<<<<<< HEAD
     
      public String validateNames(String name) {
+=======
+
+    /*Validate names/
+    public String validateNames(String name) {
+>>>>>>> carlosBranch
 
         name = name.toLowerCase();
         String alphabet = "abcdefghijklmnopqrstuvwxyzñáéíóú";
