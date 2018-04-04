@@ -11,22 +11,10 @@ package Logic;
  */
 public class DataTypesValidation {
 
-<<<<<<< HEAD
- 
-    
-
-
-<<<<<<< HEAD
-=======
-     */
- /*Validate IDs*/
-    public String validateID(String id) {
->>>>>>> carlosBranch
 
     
     
-=======
->>>>>>> f479b243c7b791ddaf801a8599a4a7e5b1191943
+
     
     /*Validacion de la cédula*/
     
@@ -107,9 +95,7 @@ public class DataTypesValidation {
         if(10-total%10 == Character.getNumericValue(id.charAt(9))) return true;
         else return false;
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
+
 
 
 /*Validation de doubles*/
@@ -140,19 +126,16 @@ public class DataTypesValidation {
     
     
     
-    
-    
+
     
 }
 
->>>>>>> f479b243c7b791ddaf801a8599a4a7e5b1191943
+
     
-     public String validateNames(String name) {
-=======
 
     /*Validate names*/
     public String validateNames(String name) {
->>>>>>> carlosBranch
+
 
         name = name.toLowerCase();
         String alphabet = "abcdefghijklmnopqrstuvwxyzñáéíóú";
@@ -174,10 +157,12 @@ public class DataTypesValidation {
             }
         }
     }
+    
+}
 
     
     
-}
+  
 
 
 

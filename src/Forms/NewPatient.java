@@ -296,7 +296,7 @@ public class NewPatient extends javax.swing.JFrame {
 
     public String getTextWeight(){
         return validate.validateDouble(Weight.getText());
-
+    }
     
     public String getTextHeight() {
         return validate.validateIntegers(Height.getText(), 220);
