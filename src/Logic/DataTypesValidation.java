@@ -123,15 +123,7 @@ public class DataTypesValidation {
         }
     
     }
-    
-    
-    
-
-    
-}
-
-
-    
+      
 
     /*Validate names*/
     public String validateNames(String name) {
