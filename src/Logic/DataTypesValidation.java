@@ -122,11 +122,6 @@ public class DataTypesValidation {
     
     
     
-    
-    
-}
-
-    
      public String validateNames(String name) {
 
         name = name.toLowerCase();
@@ -149,10 +144,12 @@ public class DataTypesValidation {
             }
         }
     }
+    
+}
 
     
     
-}
+  
 
 
 

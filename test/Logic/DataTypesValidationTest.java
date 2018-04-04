@@ -72,6 +72,7 @@ public class DataTypesValidationTest {
 
     
     public void testValidateNames() {
+        DataTypesValidation instance = new DataTypesValidation();
         System.out.println("getTextNames");
         assertEquals("The name cannot be null", instance.validateNames(""));
         assertEquals("Wrong format", instance.validateNames("Carlos@123"));
