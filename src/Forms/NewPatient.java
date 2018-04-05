@@ -242,6 +242,7 @@ public class NewPatient extends javax.swing.JFrame {
 
     private void NewPatientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NewPatientMouseClicked
 <<<<<<< HEAD
+<<<<<<< HEAD
             String cedula = getTextID();
             String fechAnalisis = Analysis.getText();
             String nombre = FName.getText();
@@ -267,6 +268,8 @@ public class NewPatient extends javax.swing.JFrame {
             Height.setText(null);
                     Menu rgf = new Menu();
 =======
+=======
+>>>>>>> carlosBranch
         String cedula = ID.getText();
         String fechAnalisis = Analysis.getText();
         String nombre = FName.getText();
@@ -290,6 +293,9 @@ public class NewPatient extends javax.swing.JFrame {
         Weight.setText(null);
         Height.setText(null);
         Menu rgf = new Menu();
+<<<<<<< HEAD
+>>>>>>> carlosBranch
+=======
 >>>>>>> carlosBranch
         rgf.setVisible(true);
         rgf.pack();
@@ -316,6 +322,7 @@ public class NewPatient extends javax.swing.JFrame {
         return validate.validateID(ID.getText());
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
     public String getTextWeight(){
@@ -332,6 +339,9 @@ public class NewPatient extends javax.swing.JFrame {
 
     
 
+=======
+
+>>>>>>> carlosBranch
 =======
 
 >>>>>>> carlosBranch
