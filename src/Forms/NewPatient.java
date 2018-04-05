@@ -243,7 +243,7 @@ public class NewPatient extends javax.swing.JFrame {
     }//GEN-LAST:event_CancelButtonActionPerformed
 
     private void NewPatientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NewPatientMouseClicked
-            String cedula = getTextID();
+            String cedula = ID.getText();
             String fechAnalisis = Analysis.getText();
             String nombre = FName.getText();
             String apellido = LName.getText();

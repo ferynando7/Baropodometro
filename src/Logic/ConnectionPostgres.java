@@ -32,8 +32,8 @@ public class ConnectionPostgres {
         try {
             Class.forName("org.postgresql.Driver");
             c = DriverManager
-            .getConnection("jdbc:postgresql://192.168.1.5:5432/baropodometro",
-            "postgres", "1234");
+            .getConnection("jdbc:postgresql://localhost/baropodometro",
+            "carlos", "1234");
         } catch (Exception e) {
             System.err.println((new DBExceptions()).conexionError() + ": " + e.getMessage());
             System.exit(0);
@@ -54,7 +54,7 @@ public class ConnectionPostgres {
         try {
             c = connectDB();
             stmt = c.createStatement();
-            String sql = "INSERT INTO paciente (cedula,fechanalisis ,NOMBRE,APELLIDO, genero,fechnac,altura,peso) "
+            String sql = "INSERT INTO paciente (idpatient,fecha_analisis,nombre,apellido,genero,fecnac,altura,peso) "
             + "VALUES ("+values +");";
             stmt.executeUpdate(sql);
             stmt.close();
@@ -81,12 +81,12 @@ public class ConnectionPostgres {
             ResultSet rs = stmt.executeQuery( "SELECT * FROM paciente;" );
            
             while ( rs.next() ) {
-                String cedula = rs.getString("cedula");
-                String fechaAnalisis = rs.getString("fechAnalisis");
+                String cedula = rs.getString("idpatient");
+                String fechaAnalisis = rs.getString("fecha_analisis");
                 String nombre = rs.getString("nombre");
                 String apellido = rs.getString("apellido");
                 String genero = rs.getString ("genero");
-                String fechNac = rs.getString ("fechNac");
+                String fechNac = rs.getString ("fecnac");
                 String altura = rs.getString ("altura");
                 String peso = rs.getString ("peso");
                 
