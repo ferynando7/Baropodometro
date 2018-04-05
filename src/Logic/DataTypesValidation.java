@@ -18,7 +18,7 @@ public class DataTypesValidation {
     
     /*Validacion de la cédula*/
     
-        public String validateID(String id){
+    public String validateID(String id){
        
         if (id.length()==10){
             if (isNumeric(id)){
@@ -48,7 +48,7 @@ public class DataTypesValidation {
             return "Non numeric";
         }
       
-
+    /*Se valida si un string es numerico*/
     private static boolean isNumeric(String cadena){
         try{
             Integer.parseInt(cadena);
@@ -58,6 +58,9 @@ public class DataTypesValidation {
         }
     }
     
+    /*Dado un string se valida que los dos primeros digitos correspondan al
+    codigo de una provincia de Ecuador, o que pertenezca a una persona extranjera
+    que posee numero de cedula*/
     private static boolean codProvCorrect(String cadena){
         String twoFirstDigits = cadena.substring(0,1);
         int digits = Integer.parseInt(twoFirstDigits);
@@ -68,6 +71,8 @@ public class DataTypesValidation {
         }
     }
     
+    /*Dado un string se valida que el ultimo digito cumpla las reglas de verificacion
+    que todo numero de cedula ecuatoriana debe cumplir.*/
     private static boolean digVerifCorrect(String id){
         int impar = 0;
         int par = 1;

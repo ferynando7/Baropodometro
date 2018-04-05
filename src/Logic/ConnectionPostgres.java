@@ -17,19 +17,10 @@ import java.util.ArrayList;
 
 public class ConnectionPostgres {
 
-    /**
-     * public static void main(String[] args) {
-     *
-     * String input = "'Fernando','Zhapa'"; insertData(input); recoverData(); }
-   *
-     */
-
     public ConnectionPostgres() {
     }
 
-    ;
-    
-    
+    /*Funcion que se encarga de realizar la conexión a la base de datos*/
     public Connection connectDB() {
         Connection c = null;
         try {
@@ -46,12 +37,10 @@ public class ConnectionPostgres {
         return c;
     }
 
+    /*Funcion que se encarga de insertar los datos en la tabla paciente, recibe 
+    como parametros los valores de los campos a insertar*/
     public void insertData(String values) {
-        /**
-         * values debe estar en el formato correspondiente SQL
-         *
-         *
-         */
+        //values debe estar en el formato correspondiente SQL
 
         Connection c;
         Statement stmt = null;
@@ -72,6 +61,7 @@ public class ConnectionPostgres {
         System.out.println("Records created successfully");
     }
 
+    /*Funcion que se encarga de recuperar los registros de la tabla paciente*/
     public ArrayList<String> recoverData() {
         Connection c;
 
@@ -107,6 +97,8 @@ public class ConnectionPostgres {
         return datos;
     }
 
+    /*Funcion que se encarga de eliminar un registro de la tabla paciente,
+    para borrar se debe pasar como parametro la cedula del paciente y la fecha de analisis*/
     public void deleteRegister(String cedula, String fechAnalisis) {
 
         Connection c;
