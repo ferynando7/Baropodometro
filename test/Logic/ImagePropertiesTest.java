@@ -53,66 +53,84 @@ public class ImagePropertiesTest {
     /**
      * Test of Formato method, of class TestExample.
      */
+    
+    
+    //This test function verifies if an image has a specific 
+    //The first two images loaded have .jpeg format, so "formato" function
+    //in "ImagePropoerties" will return "JPEG"; the other three images have
+    //".png" extension, so "Image format is not correct" is expected from the same function
+    //We can test any image by attaching its path
     @Test
     public void testFormato() throws Exception {
         System.out.println("");
         System.out.println("Image format");
-        ImageProperties instance = new ImageProperties();
         
-        assertEquals("JPEG", instance.Formato("C:\\Users\\USER\\Desktop\\Nueva carpeta\\1.jpg"));
-        assertEquals("JPEG", instance.Formato("C:\\Users\\USER\\Desktop\\Nueva carpeta\\2.jpg"));
-        assertEquals("Image format is not correct.", instance.Formato("C:\\Users\\USER\\Desktop\\Nueva carpeta\\3.png"));
-        assertEquals("Image format is not correct.", instance.Formato("C:\\Users\\USER\\Desktop\\Nueva carpeta\\4.png"));
-        assertEquals("Image format is not correct.", instance.Formato("C:\\Users\\USER\\Desktop\\Nueva carpeta\\5.png"));
-        //assertEquals(expResult, result);
+        assertEquals("JPEG", ImageProperties.formato("C:\\Users\\USER\\Desktop\\Nueva carpeta\\1.jpg"));
+        assertEquals("JPEG", ImageProperties.formato("C:\\Users\\USER\\Desktop\\Nueva carpeta\\2.jpg"));
+        assertEquals("Image format is not correct.", ImageProperties.formato("C:\\Users\\USER\\Desktop\\Nueva carpeta\\3.png"));
+        assertEquals("Image format is not correct.", ImageProperties.formato("C:\\Users\\USER\\Desktop\\Nueva carpeta\\4.png"));
+        assertEquals("Image format is not correct.", ImageProperties.formato("C:\\Users\\USER\\Desktop\\Nueva carpeta\\5.png"));
     }
 
     /**
      * Test of Size method, of class TestExample.
      */
     @Test
+    //The following test function verifies if an image has a size inferior to a
+    //specified one in "ImageProperties". If size is less than specified, function "Size" in ImagePropoerties
+    //will return "Size is ok", else "File exceeds size" is expected.
+    //We can verify the size of any image by giving its path
     public void testSize() {
         System.out.println("");     
         System.out.println("Image size");
-        ImageProperties instance = new ImageProperties();
-        
-        assertEquals("Size is ok", instance.Size("C:\\Users\\USER\\Desktop\\Nueva carpeta\\1.jpg"));
-        assertEquals("File exceeds size", instance.Size("C:\\Users\\USER\\Desktop\\Nueva carpeta\\2.jpg"));
-        assertEquals("File exceeds size", instance.Size("C:\\Users\\USER\\Desktop\\Nueva carpeta\\3.png"));
-        assertEquals("File exceeds size", instance.Size("C:\\Users\\USER\\Desktop\\Nueva carpeta\\4.png"));
-        assertEquals("File exceeds size", instance.Size("C:\\Users\\USER\\Desktop\\Nueva carpeta\\5.png"));
+
+        assertEquals("Size is ok", ImageProperties.size("C:\\Users\\USER\\Desktop\\Nueva carpeta\\1.jpg"));
+        assertEquals("File exceeds size", ImageProperties.size("C:\\Users\\USER\\Desktop\\Nueva carpeta\\2.jpg"));
+        assertEquals("File exceeds size", ImageProperties.size("C:\\Users\\USER\\Desktop\\Nueva carpeta\\3.png"));
+        assertEquals("File exceeds size", ImageProperties.size("C:\\Users\\USER\\Desktop\\Nueva carpeta\\4.png"));
+        assertEquals("File exceeds size", ImageProperties.size("C:\\Users\\USER\\Desktop\\Nueva carpeta\\5.png"));
     }
 
     /**
      * Test of Width method, of class TestExample.
+     * @throws java.io.IOException
     */ 
     @Test
+    //This test function verifies if a the width of an image is equal to a specific
+    //value defined in "ImagePropoerties". If the width of the image is correct, "Width" function 
+    //will return the specified value; else it should return 0 
+    //We can verify the width of any image by giving its path
     public void testWidth() throws IOException {
         System.out.println("");
         System.out.println("Image Width");
-        ImageProperties instance = new ImageProperties();
+
         
-        assertEquals(560, instance.Width("C:\\Users\\USER\\Desktop\\Nueva carpeta\\1.jpg"));
-        assertEquals(0, instance.Width("C:\\Users\\USER\\Desktop\\Nueva carpeta\\2.jpg"));
-        assertEquals(560, instance.Width("C:\\Users\\USER\\Desktop\\Nueva carpeta\\3.png"));
-        assertEquals(0, instance.Width("C:\\Users\\USER\\Desktop\\Nueva carpeta\\4.png"));
-        assertEquals(0, instance.Width("C:\\Users\\USER\\Desktop\\Nueva carpeta\\5.png"));
+        assertEquals(560, ImageProperties.width("C:\\Users\\USER\\Desktop\\Nueva carpeta\\1.jpg"));
+        assertEquals(0, ImageProperties.width("C:\\Users\\USER\\Desktop\\Nueva carpeta\\2.jpg"));
+        assertEquals(560, ImageProperties.width("C:\\Users\\USER\\Desktop\\Nueva carpeta\\3.png"));
+        assertEquals(0, ImageProperties.width("C:\\Users\\USER\\Desktop\\Nueva carpeta\\4.png"));
+        assertEquals(0, ImageProperties.width("C:\\Users\\USER\\Desktop\\Nueva carpeta\\5.png"));
     }
 
     /**
      * Test of Height method, of class TestExample.
+     * @throws java.io.IOException
     */ 
     @Test
+    //This test function verifies if a the height of an image is equal to a specific
+    //value defined in "ImagePropoerties". If the width of the image is correct, "Height" function 
+    //will return the specified value; else it should return 0 
+    //We can verify the height of any image by giving its path
     public void testHeight() throws IOException {
         System.out.println("");
         System.out.println("Image Height");
-        ImageProperties instance = new ImageProperties();
+
         
-        assertEquals(350, instance.Height("C:\\Users\\USER\\Desktop\\Nueva carpeta\\1.jpg"));
-        assertEquals(0, instance.Height("C:\\Users\\USER\\Desktop\\Nueva carpeta\\2.jpg"));
-        assertEquals(350, instance.Height("C:\\Users\\USER\\Desktop\\Nueva carpeta\\3.png"));
-        assertEquals(0, instance.Height("C:\\Users\\USER\\Desktop\\Nueva carpeta\\4.png"));
-        assertEquals(0, instance.Height("C:\\Users\\USER\\Desktop\\Nueva carpeta\\5.png"));
+        assertEquals(350, ImageProperties.height("C:\\Users\\USER\\Desktop\\Nueva carpeta\\1.jpg"));
+        assertEquals(0, ImageProperties.height("C:\\Users\\USER\\Desktop\\Nueva carpeta\\2.jpg"));
+        assertEquals(350, ImageProperties.height("C:\\Users\\USER\\Desktop\\Nueva carpeta\\3.png"));
+        assertEquals(0, ImageProperties.height("C:\\Users\\USER\\Desktop\\Nueva carpeta\\4.png"));
+        assertEquals(0, ImageProperties.height("C:\\Users\\USER\\Desktop\\Nueva carpeta\\5.png"));
     }
   
 }
