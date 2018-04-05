@@ -18,10 +18,8 @@ public class NewPatient extends javax.swing.JFrame {
     /**
      * Creates new form NewPatient
      */
-    
-    
     private DataTypesValidation validate = new DataTypesValidation();
-    
+
     public NewPatient() {
         initComponents();
     }
@@ -237,12 +235,13 @@ public class NewPatient extends javax.swing.JFrame {
         Menu rgf = new Menu();
         rgf.setVisible(true);
         rgf.pack();
-        rgf.setLocationRelativeTo(null); 
+        rgf.setLocationRelativeTo(null);
         rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_CancelButtonActionPerformed
 
     private void NewPatientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NewPatientMouseClicked
+<<<<<<< HEAD
             String cedula = getTextID();
             String fechAnalisis = Analysis.getText();
             String nombre = FName.getText();
@@ -267,19 +266,43 @@ public class NewPatient extends javax.swing.JFrame {
             Weight.setText(null);
             Height.setText(null);
                     Menu rgf = new Menu();
+=======
+        String cedula = ID.getText();
+        String fechAnalisis = Analysis.getText();
+        String nombre = FName.getText();
+        String apellido = LName.getText();
+        String genero = Gender.getText();
+        String fechNac = Birth.getText();
+        String altura = Height.getText();
+        String peso = Weight.getText();
+
+        String values = "'" + cedula + "','" + fechAnalisis + "','" + nombre + "','" + apellido + "','" + genero + "','" + fechNac + "'," + altura + "," + peso;
+
+        ConnectionPostgres newConnection = new ConnectionPostgres();
+        System.out.println(values);
+        newConnection.insertData(values);
+        Analysis.setText(null);
+        Birth.setText(null);
+        FName.setText(null);
+        LName.setText(null);
+        Gender.setText(null);
+        ID.setText(null);
+        Weight.setText(null);
+        Height.setText(null);
+        Menu rgf = new Menu();
+>>>>>>> carlosBranch
         rgf.setVisible(true);
         rgf.pack();
-        rgf.setLocationRelativeTo(null); 
+        rgf.setLocationRelativeTo(null);
         rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();   
-            
+        this.dispose();
+
     }//GEN-LAST:event_NewPatientMouseClicked
 
     private void NewPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewPatientActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_NewPatientActionPerformed
 
-    
     /*Codigos de excepciones
     
     001: Tipo de dato no válido
@@ -288,10 +311,11 @@ public class NewPatient extends javax.swing.JFrame {
     004: Valores negativos no aceptados
     
     
-    */
-    public String getTextID(){
+     */
+    public String getTextID() {
         return validate.validateID(ID.getText());
     }
+<<<<<<< HEAD
 
 
     public String getTextWeight(){
@@ -308,6 +332,9 @@ public class NewPatient extends javax.swing.JFrame {
 
     
 
+=======
+
+>>>>>>> carlosBranch
     /**
      * @param args the command line arguments
      */

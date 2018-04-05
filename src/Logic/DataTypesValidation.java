@@ -126,6 +126,9 @@ public class DataTypesValidation {
       
 
     /*Validate names*/
+    /*This function checks if the name or last name contains only characters
+    that are in the alphabet because a name or lastname cannot have numbers
+    or symbols*/
     public String validateNames(String name) {
 
 
