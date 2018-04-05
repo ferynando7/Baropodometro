@@ -156,7 +156,7 @@ public class Register extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+//This function closes the current window and opens back the Menu form
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         Menu rgf = new Menu();
         rgf.setVisible(true);
@@ -166,11 +166,13 @@ public class Register extends javax.swing.JFrame {
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
+    //Function to retrieve and display all data stored in DB
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         getData();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    //Function that "constructs" the table, by getting all data stored in DB 
     public void getData(){
             DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
         modelo.setRowCount(0);
@@ -191,6 +193,8 @@ public class Register extends javax.swing.JFrame {
     
     }
     
+    //Function that deletes the data of a clicked row, which belongs to a 
+    //specific patient, and refreshes the table
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         // TODO add your handling code here:
         

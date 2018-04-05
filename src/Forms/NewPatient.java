@@ -126,9 +126,10 @@ public class NewPatient extends javax.swing.JFrame {
 
         CancelButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         CancelButton.setText("Cancel");
+        CancelButton.setActionCommand("cancel");
         CancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CancelButtonActionPerformed(evt);
+                cancelButtonActionPerformed(evt);
             }
         });
 
@@ -136,12 +137,12 @@ public class NewPatient extends javax.swing.JFrame {
         NewPatient.setText("Save");
         NewPatient.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                NewPatientMouseClicked(evt);
+                newPatientMouseClicked(evt);
             }
         });
         NewPatient.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NewPatientActionPerformed(evt);
+                newPatientActionPerformed(evt);
             }
         });
 
@@ -233,16 +234,19 @@ public class NewPatient extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
+    //Function that closes the current window and opens the Menu form
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         Menu rgf = new Menu();
         rgf.setVisible(true);
         rgf.pack();
         rgf.setLocationRelativeTo(null); 
         rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();        // TODO add your handling code here:
-    }//GEN-LAST:event_CancelButtonActionPerformed
+    }//GEN-LAST:event_cancelButtonActionPerformed
 
-    private void NewPatientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NewPatientMouseClicked
+    //Function that gets all text stored in the textboxes of the form and 
+    //creates a new entry in DB
+    private void newPatientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_newPatientMouseClicked
             String cedula = getTextID();
             String fechAnalisis = Analysis.getText();
             String nombre = FName.getText();
@@ -273,11 +277,11 @@ public class NewPatient extends javax.swing.JFrame {
         rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();   
             
-    }//GEN-LAST:event_NewPatientMouseClicked
+    }//GEN-LAST:event_newPatientMouseClicked
 
-    private void NewPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewPatientActionPerformed
+    private void newPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newPatientActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_NewPatientActionPerformed
+    }//GEN-LAST:event_newPatientActionPerformed
 
     
     /*Codigos de excepciones
@@ -289,15 +293,16 @@ public class NewPatient extends javax.swing.JFrame {
     
     
     */
+    //Function that gets the string stored in ID textbox and validates it
     public String getTextID(){
         return validate.validateID(ID.getText());
     }
 
-
+    //Function that gets the string stored in Weight textbox and validates it
     public String getTextWeight(){
         return validate.validateDouble(Weight.getText());
-
-    
+    }
+    //Function that gets the string stored in Height textbox and validates it
     public String getTextHeight() {
         return validate.validateIntegers(Height.getText(), 220);
 
