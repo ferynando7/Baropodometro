@@ -18,10 +18,8 @@ public class NewPatient extends javax.swing.JFrame {
     /**
      * Creates new form NewPatient
      */
-    
-    
     private DataTypesValidation validate = new DataTypesValidation();
-    
+
     public NewPatient() {
         initComponents();
     }
@@ -239,10 +237,11 @@ public class NewPatient extends javax.swing.JFrame {
         Menu rgf = new Menu();
         rgf.setVisible(true);
         rgf.pack();
-        rgf.setLocationRelativeTo(null); 
+        rgf.setLocationRelativeTo(null);
         rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_cancelButtonActionPerformed
+
 
     //Function that gets all text stored in the textboxes of the form and 
     //creates a new entry in DB
@@ -271,19 +270,21 @@ public class NewPatient extends javax.swing.JFrame {
             Weight.setText(null);
             Height.setText(null);
                     Menu rgf = new Menu();
+
         rgf.setVisible(true);
         rgf.pack();
-        rgf.setLocationRelativeTo(null); 
+        rgf.setLocationRelativeTo(null);
         rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         this.dispose();   
             
     }//GEN-LAST:event_newPatientMouseClicked
+
 
     private void newPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newPatientActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_newPatientActionPerformed
 
-    
     /*Codigos de excepciones
     
     001: Tipo de dato no válido
@@ -292,6 +293,7 @@ public class NewPatient extends javax.swing.JFrame {
     004: Valores negativos no aceptados
     
     
+
     */
     //Function that gets the string stored in ID textbox and validates it
     public String getTextID(){
@@ -303,16 +305,12 @@ public class NewPatient extends javax.swing.JFrame {
         return validate.validateDouble(Weight.getText());
     }
     //Function that gets the string stored in Height textbox and validates it
+
     public String getTextHeight() {
         return validate.validateIntegers(Height.getText(), 220);
 
     }
         
-
-   
-
-    
-
     /**
      * @param args the command line arguments
      */

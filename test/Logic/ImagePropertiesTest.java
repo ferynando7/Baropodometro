@@ -83,7 +83,7 @@ public class ImagePropertiesTest {
     public void testSize() {
         System.out.println("");     
         System.out.println("Image size");
-        
+
         assertEquals("Size is ok", ImageProperties.size("C:\\Users\\USER\\Desktop\\Nueva carpeta\\1.jpg"));
         assertEquals("File exceeds size", ImageProperties.size("C:\\Users\\USER\\Desktop\\Nueva carpeta\\2.jpg"));
         assertEquals("File exceeds size", ImageProperties.size("C:\\Users\\USER\\Desktop\\Nueva carpeta\\3.png"));
@@ -103,6 +103,7 @@ public class ImagePropertiesTest {
     public void testWidth() throws IOException {
         System.out.println("");
         System.out.println("Image Width");
+
         
         assertEquals(560, ImageProperties.width("C:\\Users\\USER\\Desktop\\Nueva carpeta\\1.jpg"));
         assertEquals(0, ImageProperties.width("C:\\Users\\USER\\Desktop\\Nueva carpeta\\2.jpg"));
@@ -123,6 +124,7 @@ public class ImagePropertiesTest {
     public void testHeight() throws IOException {
         System.out.println("");
         System.out.println("Image Height");
+
         
         assertEquals(350, ImageProperties.height("C:\\Users\\USER\\Desktop\\Nueva carpeta\\1.jpg"));
         assertEquals(0, ImageProperties.height("C:\\Users\\USER\\Desktop\\Nueva carpeta\\2.jpg"));

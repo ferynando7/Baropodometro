@@ -7,7 +7,7 @@ package Forms;
 
 import Logic.ConnectionPostgres;
 import java.util.ArrayList;
-import javax.swing.JTable; 
+import javax.swing.JTable;
 import java.util.Iterator;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
@@ -161,7 +161,7 @@ public class Register extends javax.swing.JFrame {
         Menu rgf = new Menu();
         rgf.setVisible(true);
         rgf.pack();
-        rgf.setLocationRelativeTo(null); 
+        rgf.setLocationRelativeTo(null);
         rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jToggleButton1ActionPerformed
@@ -172,41 +172,43 @@ public class Register extends javax.swing.JFrame {
         getData();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+
     //Function that "constructs" the table, by getting all data stored in DB 
     public void getData(){
             DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+
+
         modelo.setRowCount(0);
         String datoPaciente;
-        String [] datosSplit;
+        String[] datosSplit;
         ConnectionPostgres newConnection = new ConnectionPostgres();
         ArrayList<String> datos = newConnection.recoverData();
         Iterator it = datos.iterator();
-        while(it.hasNext()){
+        while (it.hasNext()) {
             datoPaciente = it.next().toString();
             datosSplit = datoPaciente.split(",");
-            
-            modelo.addRow(new Object[]{datosSplit[0],datosSplit[1],datosSplit[2],datosSplit[3],datosSplit[4],datosSplit[5],datosSplit[6],datosSplit[7]});
-            
-            
+
+            modelo.addRow(new Object[]{datosSplit[0], datosSplit[1], datosSplit[2], datosSplit[3], datosSplit[4], datosSplit[5], datosSplit[6], datosSplit[7]});
+
         }
-    
-    
+
     }
-    
+
+
     //Function that deletes the data of a clicked row, which belongs to a 
     //specific patient, and refreshes the table
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         // TODO add your handling code here:
-        
+
         int row = jTable1.getSelectedRow();
         String cedula = jTable1.getModel().getValueAt(row, 0).toString();
         String fechAnalisis = jTable1.getModel().getValueAt(row, 1).toString();
 
         ConnectionPostgres newConnection = new ConnectionPostgres();
-        
+
         newConnection.deleteRegister(cedula, fechAnalisis);
-        
-        getData();        
+
+        getData();
     }//GEN-LAST:event_jButton2MouseClicked
 
     /**
@@ -242,10 +244,7 @@ public class Register extends javax.swing.JFrame {
                 new Register().setVisible(true);
             }
         });
-        
-            
-        
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
