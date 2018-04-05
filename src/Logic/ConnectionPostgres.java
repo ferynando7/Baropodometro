@@ -58,7 +58,7 @@ public class ConnectionPostgres {
         try {
             c = connectDB();
             stmt = c.createStatement();
-            String sql = "INSERT INTO paciente (idpatient,fecha_analisis,nombre,apellido,genero,fecnac,altura,peso) "
+            String sql = "INSERT INTO patient (id,firstName,lastName,genre,fecNac,altura,peso,fecha_analisis) "
                     + "VALUES (" + values + ");";
             stmt.executeUpdate(sql);
             stmt.close();
@@ -81,15 +81,15 @@ public class ConnectionPostgres {
         try {
             c = connectDB();
             stmt = c.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM paciente;");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM patient;");
 
             while (rs.next()) {
-                String cedula = rs.getString("idpatient");
+                String cedula = rs.getString("id");
                 String fechaAnalisis = rs.getString("fecha_analisis");
-                String nombre = rs.getString("nombre");
-                String apellido = rs.getString("apellido");
-                String genero = rs.getString("genero");
-                String fechNac = rs.getString("fecnac");
+                String nombre = rs.getString("firstName");
+                String apellido = rs.getString("lastName");
+                String genero = rs.getString("genre");
+                String fechNac = rs.getString("fecNac");
                 String altura = rs.getString("altura");
                 String peso = rs.getString("peso");
 
@@ -114,7 +114,7 @@ public class ConnectionPostgres {
         try {
             c = connectDB();
             stmt = c.createStatement();
-            String sql = "DELETE from paciente where idpatient = '" + cedula + "' and fecha_analisis = '" + fechAnalisis + "';";
+            String sql = "DELETE from patient where id = '" + cedula + "' and fecha_analisis = '" + fechAnalisis + "';";
             stmt.executeUpdate(sql);
             c.setAutoCommit(false);
             c.commit();

@@ -279,7 +279,7 @@ public class NewPatient extends javax.swing.JFrame {
         String altura = Height.getText();
         String peso = Weight.getText();
 
-        String values = "'" + cedula + "','" + fechAnalisis + "','" + nombre + "','" + apellido + "','" + genero + "','" + fechNac + "'," + altura + "," + peso;
+        String values = "'" + cedula + "','" + nombre + "','" + apellido + "','" + genero + "','" + fechNac + "','" + altura + "','" + peso + "',"+"current_date";
 
         ConnectionPostgres newConnection = new ConnectionPostgres();
         System.out.println(values);
