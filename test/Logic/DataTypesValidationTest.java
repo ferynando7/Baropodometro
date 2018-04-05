@@ -16,15 +16,15 @@ import static org.junit.Assert.*;
  * @author ferynando7
  */
 public class DataTypesValidationTest {
-    
+
 
     public DataTypesValidationTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
@@ -37,15 +37,17 @@ public class DataTypesValidationTest {
         System.out.println("getTextID");
 
         DataTypesValidation instance = new DataTypesValidation();
-        
+
         assertEquals("Exception 002", instance.validateID("12345e"));
         assertEquals("Exception 002", instance.validateID("12345"));
         assertEquals("Exception 003", instance.validateID("1104136139"));
         assertEquals("1104136138", instance.validateID("1104136138"));
-       
+
     }
 
-    
+    /**
+     * Test of validateDouble method, of class DataTypesValidation.Used to validate the Weight of the patient
+     */
     @Test
     public void testValidateDouble (){
         System.out.println("getTextWeight");
@@ -58,28 +60,28 @@ public class DataTypesValidationTest {
     }
 
 
-      
+
     @Test
     public void testValidateHeight() {
         System.out.println("getTextHeight");
         DataTypesValidation instance = new DataTypesValidation();
-        
+
         assertEquals("Valid", instance.validateIntegers("175",220));
         assertEquals("Out of range", instance.validateIntegers("300",220));
         assertEquals("Out of range", instance.validateIntegers("-29",220));
         assertEquals("Non numeric", instance.validateIntegers("s34k",220));
     }
 
-    
+
     public void testValidateNames() {
         DataTypesValidation instance = new DataTypesValidation();
         System.out.println("getTextNames");
         assertEquals("The name cannot be null", instance.validateNames(""));
         assertEquals("Wrong format", instance.validateNames("Carlos@123"));
         assertEquals("ok", instance.validateNames("Carlos"));
-       
+
     }
-    
+
 
 
 }
