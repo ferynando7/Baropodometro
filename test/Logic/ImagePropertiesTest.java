@@ -65,11 +65,11 @@ public class ImagePropertiesTest {
         System.out.println("");
         System.out.println("Image format");
         
-        assertEquals("JPEG", ImageProperties.formato("C:\\Users\\USER\\Desktop\\Nueva carpeta\\1.jpg"));
-        assertEquals("JPEG", ImageProperties.formato("C:\\Users\\USER\\Desktop\\Nueva carpeta\\2.jpg"));
-        assertEquals("Image format is not correct.", ImageProperties.formato("C:\\Users\\USER\\Desktop\\Nueva carpeta\\3.png"));
-        assertEquals("Image format is not correct.", ImageProperties.formato("C:\\Users\\USER\\Desktop\\Nueva carpeta\\4.png"));
-        assertEquals("Image format is not correct.", ImageProperties.formato("C:\\Users\\USER\\Desktop\\Nueva carpeta\\5.png"));
+        assertEquals("JPEG", ImageProperties.formato("/home/carlos/NetBeansProjects/Baropodometro/1.jpg"));
+        assertEquals("JPEG", ImageProperties.formato("/home/carlos/NetBeansProjects/Baropodometro/2.jpg"));
+        assertEquals("Image format is not correct.", ImageProperties.formato("/home/carlos/NetBeansProjects/Baropodometro/3.png"));
+        assertEquals("Image format is not correct.", ImageProperties.formato("/home/carlos/NetBeansProjects/Baropodometro/4.png"));
+        assertEquals("Image format is not correct.", ImageProperties.formato("/home/carlos/NetBeansProjects/Baropodometro/5.png"));
     }
 
     /**
@@ -84,11 +84,11 @@ public class ImagePropertiesTest {
         System.out.println("");     
         System.out.println("Image size");
 
-        assertEquals("Size is ok", ImageProperties.size("C:\\Users\\USER\\Desktop\\Nueva carpeta\\1.jpg"));
-        assertEquals("File exceeds size", ImageProperties.size("C:\\Users\\USER\\Desktop\\Nueva carpeta\\2.jpg"));
-        assertEquals("File exceeds size", ImageProperties.size("C:\\Users\\USER\\Desktop\\Nueva carpeta\\3.png"));
-        assertEquals("File exceeds size", ImageProperties.size("C:\\Users\\USER\\Desktop\\Nueva carpeta\\4.png"));
-        assertEquals("File exceeds size", ImageProperties.size("C:\\Users\\USER\\Desktop\\Nueva carpeta\\5.png"));
+        assertEquals("Size is ok", ImageProperties.size("/home/carlos/NetBeansProjects/Baropodometro/1.jpg"));
+        assertEquals("File exceeds size", ImageProperties.size("/home/carlos/NetBeansProjects/Baropodometro/2.jpg"));
+        assertEquals("File exceeds size", ImageProperties.size("/home/carlos/NetBeansProjects/Baropodometro/3.png"));
+        assertEquals("File exceeds size", ImageProperties.size("/home/carlos/NetBeansProjects/Baropodometro/4.png"));
+        assertEquals("File exceeds size", ImageProperties.size("/home/carlos/NetBeansProjects/Baropodometro/5.png"));
     }
 
     /**
@@ -105,11 +105,11 @@ public class ImagePropertiesTest {
         System.out.println("Image Width");
 
         
-        assertEquals(560, ImageProperties.width("C:\\Users\\USER\\Desktop\\Nueva carpeta\\1.jpg"));
-        assertEquals(0, ImageProperties.width("C:\\Users\\USER\\Desktop\\Nueva carpeta\\2.jpg"));
-        assertEquals(560, ImageProperties.width("C:\\Users\\USER\\Desktop\\Nueva carpeta\\3.png"));
-        assertEquals(0, ImageProperties.width("C:\\Users\\USER\\Desktop\\Nueva carpeta\\4.png"));
-        assertEquals(0, ImageProperties.width("C:\\Users\\USER\\Desktop\\Nueva carpeta\\5.png"));
+        assertEquals(560, ImageProperties.width("/home/carlos/NetBeansProjects/Baropodometro/1.jpg"));
+        assertEquals(0, ImageProperties.width("/home/carlos/NetBeansProjects/Baropodometro/2.jpg"));
+        assertEquals(560, ImageProperties.width("/home/carlos/NetBeansProjects/Baropodometro/3.png"));
+        assertEquals(0, ImageProperties.width("/home/carlos/NetBeansProjects/Baropodometro/4.png"));
+        assertEquals(0, ImageProperties.width("/home/carlos/NetBeansProjects/Baropodometro/5.png"));
     }
 
     /**
@@ -126,11 +126,11 @@ public class ImagePropertiesTest {
         System.out.println("Image Height");
 
         
-        assertEquals(350, ImageProperties.height("C:\\Users\\USER\\Desktop\\Nueva carpeta\\1.jpg"));
-        assertEquals(0, ImageProperties.height("C:\\Users\\USER\\Desktop\\Nueva carpeta\\2.jpg"));
-        assertEquals(350, ImageProperties.height("C:\\Users\\USER\\Desktop\\Nueva carpeta\\3.png"));
-        assertEquals(0, ImageProperties.height("C:\\Users\\USER\\Desktop\\Nueva carpeta\\4.png"));
-        assertEquals(0, ImageProperties.height("C:\\Users\\USER\\Desktop\\Nueva carpeta\\5.png"));
+        assertEquals(350, ImageProperties.height("/home/carlos/NetBeansProjects/Baropodometro/1.jpg"));
+        assertEquals(0, ImageProperties.height("/home/carlos/NetBeansProjects/Baropodometro/2.jpg"));
+        assertEquals(350, ImageProperties.height("/home/carlos/NetBeansProjects/Baropodometro/3.png"));
+        assertEquals(0, ImageProperties.height("/home/carlos/NetBeansProjects/Baropodometro/4.png"));
+        assertEquals(0, ImageProperties.height("/home/carlos/NetBeansProjects/Baropodometro/5.png"));
     }
   
 }
