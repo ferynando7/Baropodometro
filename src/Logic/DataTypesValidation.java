@@ -37,10 +37,10 @@ public class DataTypesValidation {
     }
 
         /* Validación de enteros*/
-        public String validateIntegers(String s, int limit) {
-            if(isNumeric(s)) {
-                if(Integer.parseInt(s)>0 && Integer.parseInt(s)<=limit) {
-                    return "Valid";
+        public String validateIntegers(String height, int limit) {
+            if(isNumeric(height)) {
+                if(Integer.parseInt(height)>0 && Integer.parseInt(height)<=limit) {
+                    return height;
                 } else {
                     return "Out of range";
                 }

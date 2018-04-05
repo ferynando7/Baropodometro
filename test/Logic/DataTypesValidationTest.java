@@ -66,18 +66,18 @@ public class DataTypesValidationTest {
         System.out.println("getTextHeight");
         DataTypesValidation instance = new DataTypesValidation();
 
-        assertEquals("Valid", instance.validateIntegers("175",220));
+        assertEquals("175", instance.validateIntegers("175",220));
         assertEquals("Out of range", instance.validateIntegers("300",220));
         assertEquals("Out of range", instance.validateIntegers("-29",220));
         assertEquals("Non numeric", instance.validateIntegers("s34k",220));
     }
 
-
+    @Test
     public void testValidateNames() {
         DataTypesValidation instance = new DataTypesValidation();
         System.out.println("getTextNames");
         assertEquals("The name cannot be null", instance.validateNames(""));
-        assertEquals("Wrong format", instance.validateNames("Carlos@123"));
+        assertEquals("Wrong name format", instance.validateNames("Carlos@123"));
         assertEquals("ok", instance.validateNames("Carlos"));
 
     }

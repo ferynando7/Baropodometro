@@ -246,7 +246,7 @@ public class NewPatient extends javax.swing.JFrame {
     //Function that gets all text stored in the textboxes of the form and 
     //creates a new entry in DB
     private void newPatientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_newPatientMouseClicked
-            String cedula = getTextID();
+            String cedula = ID.getText();
             String fechAnalisis = Analysis.getText();
             String nombre = FName.getText();
             String apellido = LName.getText();
@@ -256,7 +256,7 @@ public class NewPatient extends javax.swing.JFrame {
             String peso = getTextWeight();
             
             
-            String values = "'" + cedula +  "','" + fechAnalisis + "','" + nombre + "','" + apellido + "','" + genero + "','" + fechNac + "'," + altura + "," + peso;
+            String values = "'" + cedula +  "','" + nombre + "','" + apellido + "','" + genero + "','" + fechNac + "'," + altura + "," + peso + "," + "current_date";
             
             ConnectionPostgres newConnection = new ConnectionPostgres();
             System.out.println(values);
