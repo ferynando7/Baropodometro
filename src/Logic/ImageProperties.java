@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package testexample;
+package Logic;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import static java.lang.System.in;
 import java.util.Iterator;
-import java.util.Scanner;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
@@ -23,22 +21,29 @@ public class ImageProperties {
 
     /**
      * @param args the command line arguments
+     * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
         String file = "C:\\Users\\USER\\Desktop\\Nueva carpeta\\2.jpg"; 
-        Formato(file);
-        Size(file);
-        Width(file);
-        Height(file);
+        formato(file);
+        size(file);
+        width(file);
+        height(file);
     }
 
     /**
      *
-     * @param fecha
+     * @param file
      * @return
+     * @throws java.io.IOException
      */
-        public static String Formato(String file) throws IOException{
+    
+    //The following function obtains the format (file extension) of the image
+    //specified by string "file". Inside the function we specify which kind of
+    //format we expect to get and return it; if we do not get it we return a warning message
+    //In both cases, extension file is displayed in console
+        public static String formato(String file) throws IOException{
 
 	//Create Image File
 	File imageFile = new File(file);
@@ -65,8 +70,11 @@ public class ImageProperties {
             return "Image format is not correct.";
         }
     }
-    
-    public static String Size(String file){
+    //The following function obtains the size of the image
+    //specified by string "file". Inside the function we specify the size of the 
+    //file we expect to get and return a succesful message; if we do not get it we retun a warning message
+    //In both cases, size of file is displayed in console
+    public static String size(String file){
         
         File imagefile = new File(file);
         double bytes = imagefile.length();
@@ -84,13 +92,15 @@ public class ImageProperties {
 		
     }
     
+    //The following function obtains the width of the image
+    //specified by string "file". Inside the function we specify the width of the 
+    //image we expect to get and return the value; if we do not get it we return zero
+    //In both cases, width of file is displayed in console
     
-    
-    public static int Width(String file) throws IOException{
+    public static int width(String file) throws IOException{
         File imageFile = new File(file);
-        int Width = 0;
         BufferedImage image = ImageIO.read(imageFile);
-        Width = image.getWidth();
+        int Width = image.getWidth();
        
             if (Width == 560){
                     System.out.println("Image width:" + Width);
@@ -101,12 +111,15 @@ public class ImageProperties {
             }
 
     }
-    
-        public static int Height(String file) throws IOException{
+
+    //The following function obtains the height of the image
+    //specified by string "file". Inside the function we specify the height of the 
+    //image we expect to get and return the value; if we do not get it we return zero
+    //In both cases, height of file is displayed in console    
+        public static int height(String file) throws IOException{
         File imageFile = new File(file);
-        int Height = 0;
         BufferedImage image = ImageIO.read(imageFile);
-        Height = image.getHeight();
+        int Height = image.getHeight();
        
             if (Height == 350){
                     System.out.println("Image height:" + Height);
