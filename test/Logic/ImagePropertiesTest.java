@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package testexample;
+package Logic;
 
 import java.io.IOException;
 import org.junit.After;
@@ -57,7 +57,7 @@ public class ImagePropertiesTest {
     public void testFormato() throws Exception {
         System.out.println("");
         System.out.println("Image format");
-        TestExample instance = new TestExample();
+        ImageProperties instance = new ImageProperties();
         
         assertEquals("JPEG", instance.Formato("C:\\Users\\USER\\Desktop\\Nueva carpeta\\1.jpg"));
         assertEquals("JPEG", instance.Formato("C:\\Users\\USER\\Desktop\\Nueva carpeta\\2.jpg"));
@@ -74,7 +74,7 @@ public class ImagePropertiesTest {
     public void testSize() {
         System.out.println("");     
         System.out.println("Image size");
-        TestExample instance = new TestExample();
+        ImageProperties instance = new ImageProperties();
         
         assertEquals("Size is ok", instance.Size("C:\\Users\\USER\\Desktop\\Nueva carpeta\\1.jpg"));
         assertEquals("File exceeds size", instance.Size("C:\\Users\\USER\\Desktop\\Nueva carpeta\\2.jpg"));
@@ -90,7 +90,7 @@ public class ImagePropertiesTest {
     public void testWidth() throws IOException {
         System.out.println("");
         System.out.println("Image Width");
-        TestExample instance = new TestExample();
+        ImageProperties instance = new ImageProperties();
         
         assertEquals(560, instance.Width("C:\\Users\\USER\\Desktop\\Nueva carpeta\\1.jpg"));
         assertEquals(0, instance.Width("C:\\Users\\USER\\Desktop\\Nueva carpeta\\2.jpg"));
@@ -106,7 +106,7 @@ public class ImagePropertiesTest {
     public void testHeight() throws IOException {
         System.out.println("");
         System.out.println("Image Height");
-        TestExample instance = new TestExample();
+        ImageProperties instance = new ImageProperties();
         
         assertEquals(350, instance.Height("C:\\Users\\USER\\Desktop\\Nueva carpeta\\1.jpg"));
         assertEquals(0, instance.Height("C:\\Users\\USER\\Desktop\\Nueva carpeta\\2.jpg"));

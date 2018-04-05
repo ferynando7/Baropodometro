@@ -241,35 +241,7 @@ public class NewPatient extends javax.swing.JFrame {
     }//GEN-LAST:event_CancelButtonActionPerformed
 
     private void NewPatientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NewPatientMouseClicked
-<<<<<<< HEAD
-<<<<<<< HEAD
-            String cedula = getTextID();
-            String fechAnalisis = Analysis.getText();
-            String nombre = FName.getText();
-            String apellido = LName.getText();
-            String genero = Gender.getText();
-            String fechNac = Birth.getText();
-            String altura = getTextHeight();
-            String peso = getTextWeight();
-            
-            
-            String values = "'" + cedula +  "','" + fechAnalisis + "','" + nombre + "','" + apellido + "','" + genero + "','" + fechNac + "'," + altura + "," + peso;
-            
-            ConnectionPostgres newConnection = new ConnectionPostgres();
-            System.out.println(values);
-            newConnection.insertData(values);
-            Analysis.setText(null);
-            Birth.setText(null);
-            FName.setText(null);
-            LName.setText(null);
-            Gender.setText(null);
-            ID.setText(null);
-            Weight.setText(null);
-            Height.setText(null);
-                    Menu rgf = new Menu();
-=======
-=======
->>>>>>> carlosBranch
+
         String cedula = ID.getText();
         String fechAnalisis = Analysis.getText();
         String nombre = FName.getText();
@@ -293,16 +265,12 @@ public class NewPatient extends javax.swing.JFrame {
         Weight.setText(null);
         Height.setText(null);
         Menu rgf = new Menu();
-<<<<<<< HEAD
->>>>>>> carlosBranch
-=======
->>>>>>> carlosBranch
         rgf.setVisible(true);
         rgf.pack();
         rgf.setLocationRelativeTo(null);
         rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();
-
+        this.dispose();  
+        
     }//GEN-LAST:event_NewPatientMouseClicked
 
     private void NewPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewPatientActionPerformed
@@ -321,9 +289,6 @@ public class NewPatient extends javax.swing.JFrame {
     public String getTextID() {
         return validate.validateID(ID.getText());
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-
 
     public String getTextWeight(){
         return validate.validateDouble(Weight.getText());
@@ -334,17 +299,6 @@ public class NewPatient extends javax.swing.JFrame {
 
     }
         
-
-   
-
-    
-
-=======
-
->>>>>>> carlosBranch
-=======
-
->>>>>>> carlosBranch
     /**
      * @param args the command line arguments
      */
