@@ -14,10 +14,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import Logic.ErrorMessage;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,8 +28,9 @@ public class NewPatient extends javax.swing.JFrame {
     /**
      * Creates new form NewPatient
      */
-    private DataTypesValidation validate = new DataTypesValidation();
-
+    private final DataTypesValidation validate = new DataTypesValidation();
+    private final ErrorMessage errors = new ErrorMessage();
+    
     public NewPatient(int mode) {
         initComponents();
         this.mode = mode;
@@ -151,6 +150,11 @@ public class NewPatient extends javax.swing.JFrame {
                 newPatientMouseClicked(evt);
             }
         });
+        btSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSaveActionPerformed(evt);
+            }
+        });
 
         cbGender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "F", "M" }));
         cbGender.addActionListener(new java.awt.event.ActionListener() {
@@ -160,6 +164,7 @@ public class NewPatient extends javax.swing.JFrame {
         });
 
         jdcFecNac.setDateFormatString("yyyy-MM-dd");
+        jdcFecNac.setName("jdcFecNac"); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -203,10 +208,11 @@ public class NewPatient extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel6)
-                    .addComponent(FName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel6)
+                        .addComponent(FName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jdcFecNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -233,8 +239,6 @@ public class NewPatient extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        ((JTextFieldDateEditor)jdcFecNac.getDateEditor()).setEditable(false);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -258,14 +262,12 @@ public class NewPatient extends javax.swing.JFrame {
                 rgf.pack();
                 rgf.setLocationRelativeTo(null);
                 rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                this.dispose();
             }else if (mode == 1){
                 Register reg = new Register();
                 reg.setVisible(true);
                 reg.pack();
                 reg.setLocationRelativeTo(null);
                 reg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                this.dispose();
             }
     }//GEN-LAST:event_cancelButtonActionPerformed
 
@@ -273,44 +275,7 @@ public class NewPatient extends javax.swing.JFrame {
     //Function that gets all text stored in the textboxes of the form and 
     //creates a new entry in DB
     private void newPatientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_newPatientMouseClicked
-            String cedula = ID.getText();
-            String nombre = FName.getText();
-            String apellido = LName.getText();
-            String genero = cbGender.getSelectedItem().toString();
-            String fechNac= DateFormat.getDateInstance().format(jdcFecNac.getDate());
-            String altura = getTextHeight();
-            String peso = getTextWeight();
-            
-            
-            String values = "'" + cedula +  "','" + nombre + "','" + apellido + "','" + genero + "','" + fechNac + "'," + altura + "," + peso + ", ' ' , ' '";
-            
-            ConnectionPostgres newConnection = new ConnectionPostgres();
-            System.out.println(values);
-            
-           /* FName.setText(null);
-            LName.setText(null);
-            ID.setText(null);
-            Weight.setText(null);
-            Height.setText(null);
-            */
-            if (mode == 0){
-                newConnection.insertData(values);
-                Menu rgf = new Menu();
 
-                rgf.setVisible(true);
-                rgf.pack();
-                rgf.setLocationRelativeTo(null);
-                rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            }else if (mode == 1){
-                newConnection.updateData(values);
-                Register reg = new Register();
-                reg.setVisible(true);
-                reg.pack();
-                reg.setLocationRelativeTo(null);
-                reg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            }
-        this.dispose();   
-            
     }//GEN-LAST:event_newPatientMouseClicked
 
     void getPatientData(){
@@ -318,21 +283,11 @@ public class NewPatient extends javax.swing.JFrame {
         String patientData = newConnection.recoverPatient(patientUpdate);
         String[] datosSplit;
         datosSplit = patientData.split(",");
-        System.out.println(patientData);
         ID.setText(datosSplit[0]);
         FName.setText(datosSplit[1]);
         LName.setText(datosSplit[2]);
-        cbGender.setSelectedItem(datosSplit[3]);
-//        cbGender.setValue(datosSplit[3]);
-        
-        Date dateValue = null;
-        try {
-            //        java.util.Date date = new SimpleDateFormat("dd-MM-yyyy").parse(dateValue);
-            jdcFecNac.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(datosSplit[4])); 
-        } catch (ParseException ex) {
-            Logger.getLogger(NewPatient.class.getName()).log(Level.SEVERE, null, ex);
-        }
-   
+        cbGender.setName(datosSplit[3]);
+        //jdcFecNac.setDate(SimpleDateFormat.parse(datosSplit[4]));
         Height.setText(datosSplit[5]);
         Weight.setText(datosSplit[6]);
         
@@ -344,6 +299,58 @@ public class NewPatient extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbGenderActionPerformed
 
+    private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
+     saveData();
+    }//GEN-LAST:event_btSaveActionPerformed
+
+        public void saveData() {
+            String cedula = getTextID();
+            String nombre = getTextFName();
+            String apellido = getTextLName();
+            String genero = cbGender.getSelectedItem().toString();
+            String fechNac= DateFormat.getDateInstance().format(jdcFecNac.getDate());
+            String altura = getTextHeight();
+            String peso = getTextWeight();
+            
+            
+        if (nombre.contains("Exception")) {
+            FName.setText(null);
+        }
+        if (apellido.contains("Exception")) {
+            LName.setText(null);
+        }
+        if (cedula.contains("Exception")) {
+            ID.setText(null);
+        }
+        if (altura.contains("Exception")) {
+            Height.setText(null);
+        }
+        if (peso.contains("Exception")) {
+            Weight.setText(null);
+        }
+        
+        if ((nombre.contains("Exception")) || (apellido.contains("Exception")) || (cedula.contains("Exception"))
+                || (altura.contains("Exception"))|| (peso.contains("Exception")) ){
+            return;
+        } 
+            String values = "'" + cedula + "','" + nombre + "','" + apellido + "','" + genero + "','" + fechNac + "'," + altura + "," + peso;
+        System.out.println(values);
+            /*    
+        ConnectionPostgres newConnection = new ConnectionPostgres();
+        //System.out.println(values);
+        newConnection.insertData(values);
+        FName.setText(null);
+        LName.setText(null);
+        ID.setText(null);
+        Weight.setText(null);
+        Height.setText(null);
+        Menu rgf = new Menu();
+        rgf.setVisible(true);
+        rgf.pack();
+        rgf.setLocationRelativeTo(null); 
+        rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();*/
+        }
     /*Codigos de excepciones
     
     001: Tipo de dato no válido
@@ -355,21 +362,37 @@ public class NewPatient extends javax.swing.JFrame {
 
     */
     //Function that gets the string stored in ID textbox and validates it
-    public String getTextID(){
-        return validate.validateID(ID.getText());
+   public String getTextID(){
+        String id = validate.validateID(ID.getText());
+        errors.codeSwitch(id);
+        System.out.println("Retorno" + id);
+        return id;
     }
 
-    //Function that gets the string stored in Weight textbox and validates it
+
     public String getTextWeight(){
-        return validate.validateDouble(Weight.getText());
+        String weight = validate.validateDouble(Weight.getText());
+        errors.codeSwitch(weight);
+        return weight;
     }
-    //Function that gets the string stored in Height textbox and validates it
-
+    
     public String getTextHeight() {
-        return validate.validateIntegers(Height.getText(), 220);
-
+        String height = validate.validateIntegers(Height.getText(), 220);
+        errors.codeSwitch(height);
+        return height;
     }
-        
+    
+    public String getTextFName() {
+        String fName = validate.validateNames(FName.getText());
+        errors.codeSwitch(fName);
+        return fName;
+    }
+    
+    public String getTextLName() {
+        String lName = validate.validateNames(LName.getText());
+        errors.codeSwitch(lName);
+        return lName;
+    }
     /**
      * @param args the command line arguments
      */
