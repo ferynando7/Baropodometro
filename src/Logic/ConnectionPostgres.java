@@ -26,8 +26,8 @@ public class ConnectionPostgres {
         try {
             Class.forName("org.postgresql.Driver");
             c = DriverManager
-                    .getConnection("jdbc:postgresql://localhost/baropodometro",
-                            "carlos", "1234");
+                    .getConnection("jdbc:postgresql://localhost/Baropodometro",
+                            "postgres", "1234");
         } catch (Exception e) {
             System.err.println((new DBExceptions()).conexionError() + ": " + e.getMessage());
             System.exit(0);
@@ -47,7 +47,7 @@ public class ConnectionPostgres {
         try {
             c = connectDB();
             stmt = c.createStatement();
-            String sql = "INSERT INTO patient (id,firstName,lastName,genre,fecNac,altura,peso,fecha_analisis) "
+            String sql = "INSERT INTO patient (id,firstName,lastName,genre,birthdate,heigth,weight,phone,email)"
                     + "VALUES (" + values + ");";
             stmt.executeUpdate(sql);
             stmt.close();
@@ -75,15 +75,14 @@ public class ConnectionPostgres {
 
             while (rs.next()) {
                 String cedula = rs.getString("id");
-                String fechaAnalisis = rs.getString("fecha_analisis");
                 String nombre = rs.getString("firstName");
                 String apellido = rs.getString("lastName");
                 String genero = rs.getString("genre");
-                String fechNac = rs.getString("fecNac");
-                String altura = rs.getString("altura");
-                String peso = rs.getString("peso");
+                String fechNac = rs.getString("birthdate");
+                String altura = rs.getString("heigth");
+                String peso = rs.getString("weight");
 
-                datoPaciente = cedula + "," + fechaAnalisis + "," + nombre + "," + apellido + "," + genero + "," + fechNac + "," + altura + "," + peso;
+                datoPaciente = cedula + "," + "," + nombre + "," + apellido + "," + genero + "," + fechNac + "," + altura + "," + peso;
 
                 datos.add(datoPaciente);
             }
@@ -96,17 +95,50 @@ public class ConnectionPostgres {
         }
         return datos;
     }
+    
+    
+    public String recoverPatient(String id) {
+        Connection c;
+
+        Statement stmt = null;
+        String datoPaciente = "";
+        try {
+            c = connectDB();
+            stmt = c.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM patient WHERE id =" + "'" + id + "';");
+            rs.next();
+            String cedula = rs.getString("id");
+            String nombre = rs.getString("firstName");
+            String apellido = rs.getString("lastName");
+            String genero = rs.getString("genre");
+            String fechNac = rs.getString("birthdate");
+            String altura = rs.getString("heigth");
+            String peso = rs.getString("weight");
+
+            datoPaciente = cedula + "," + "," + nombre + "," + apellido + "," + genero + "," + fechNac + "," + altura + "," + peso;
+            
+            rs.close();
+            stmt.close();
+            c.close();
+        } catch (Exception e) {
+            System.err.println((new DBExceptions()).obtainingError() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return datoPaciente;
+    }
+
+    
 
     /*Funcion que se encarga de eliminar un registro de la tabla paciente,
     para borrar se debe pasar como parametro la cedula del paciente y la fecha de analisis*/
-    public void deleteRegister(String cedula, String fechAnalisis) {
+    public void deleteRegister(String cedula) {
 
         Connection c;
         Statement stmt = null;
         try {
             c = connectDB();
             stmt = c.createStatement();
-            String sql = "DELETE from patient where id = '" + cedula + "' and fecha_analisis = '" + fechAnalisis + "';";
+            String sql = "DELETE from patient where id = '" + cedula + "';";
             stmt.executeUpdate(sql);
             c.setAutoCommit(false);
             c.commit();

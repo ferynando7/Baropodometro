@@ -8,6 +8,12 @@ package Forms;
 import Logic.ConnectionPostgres;
 import Logic.DataTypesValidation;
 import javax.swing.JFrame;
+import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JTextFieldDateEditor;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,6 +22,7 @@ import javax.swing.JFrame;
 public class NewPatient extends javax.swing.JFrame {
 
     private int mode;
+    String patientUpdate;
     /**
      * Creates new form NewPatient
      */
@@ -24,11 +31,16 @@ public class NewPatient extends javax.swing.JFrame {
     public NewPatient(int mode) {
         initComponents();
         this.mode = mode;
-        if(mode == 0){
-            lbSceenTitle.setText("Create New Patient");
-        }else if (mode == 1){
-            lbSceenTitle.setText("Update Patient");
-        }
+        lbScreenTitle.setText("Create New Patient");
+        
+    }
+    
+    public NewPatient(int mode, String patientUpdate){
+        initComponents();        
+        this.mode = mode;
+        this.patientUpdate = patientUpdate;
+        lbScreenTitle.setText("Update Patient");
+        getPatientData();
         
     }
 
@@ -43,7 +55,7 @@ public class NewPatient extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        lbSceenTitle = new javax.swing.JLabel();
+        lbScreenTitle = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -59,7 +71,7 @@ public class NewPatient extends javax.swing.JFrame {
         CancelButton = new javax.swing.JButton();
         btSave = new javax.swing.JButton();
         cbGender = new javax.swing.JComboBox<>();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jdcFecNac = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,9 +79,9 @@ public class NewPatient extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 0, 0));
 
-        lbSceenTitle.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        lbSceenTitle.setForeground(new java.awt.Color(255, 255, 255));
-        lbSceenTitle.setText("Create New Patient");
+        lbScreenTitle.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lbScreenTitle.setForeground(new java.awt.Color(255, 255, 255));
+        lbScreenTitle.setText("Create New Patient");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -77,14 +89,14 @@ public class NewPatient extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(252, 252, 252)
-                .addComponent(lbSceenTitle)
+                .addComponent(lbScreenTitle)
                 .addContainerGap(262, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lbSceenTitle)
+                .addComponent(lbScreenTitle)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -135,18 +147,17 @@ public class NewPatient extends javax.swing.JFrame {
                 newPatientMouseClicked(evt);
             }
         });
-        btSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newPatientActionPerformed(evt);
-            }
-        });
 
-        cbGender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Female", "Male" }));
+        cbGender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "F", "M" }));
         cbGender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbGenderActionPerformed(evt);
             }
         });
+
+        jdcFecNac.setDateFormatString("yyyy-MM-dd");
+        JTextFieldDateEditor editor = (JTextFieldDateEditor) jdcFecNac.getDateEditor();
+        editor.setEditable(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -177,7 +188,7 @@ public class NewPatient extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(Weight)
                             .addComponent(Height, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jdcFecNac, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(240, 240, 240)
                         .addComponent(CancelButton)
@@ -195,7 +206,7 @@ public class NewPatient extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addComponent(jLabel6)
                         .addComponent(FName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jdcFecNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -237,12 +248,20 @@ public class NewPatient extends javax.swing.JFrame {
 
     //Function that closes the current window and opens the Menu form
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        Menu rgf = new Menu();
-        rgf.setVisible(true);
-        rgf.pack();
-        rgf.setLocationRelativeTo(null);
-        rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();        // TODO add your handling code here:
+        if (mode == 0){
+                Menu rgf = new Menu();
+
+                rgf.setVisible(true);
+                rgf.pack();
+                rgf.setLocationRelativeTo(null);
+                rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            }else if (mode == 1){
+                Register reg = new Register();
+                reg.setVisible(true);
+                reg.pack();
+                reg.setLocationRelativeTo(null);
+                reg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            }
     }//GEN-LAST:event_cancelButtonActionPerformed
 
 
@@ -253,12 +272,12 @@ public class NewPatient extends javax.swing.JFrame {
             String nombre = FName.getText();
             String apellido = LName.getText();
             String genero = cbGender.getSelectedItem().toString();
-            String fechNac="";
+            String fechNac= DateFormat.getDateInstance().format(jdcFecNac.getDate());
             String altura = getTextHeight();
             String peso = getTextWeight();
             
             
-            String values = "'" + cedula +  "','" + nombre + "','" + apellido + "','" + genero + "','" + fechNac + "'," + altura + "," + peso;
+            String values = "'" + cedula +  "','" + nombre + "','" + apellido + "','" + genero + "','" + fechNac + "'," + altura + "," + peso + ", ' ' , ' '";
             
             ConnectionPostgres newConnection = new ConnectionPostgres();
             System.out.println(values);
@@ -268,21 +287,41 @@ public class NewPatient extends javax.swing.JFrame {
             ID.setText(null);
             Weight.setText(null);
             Height.setText(null);
-                    Menu rgf = new Menu();
+            
+            if (mode == 0){
+                Menu rgf = new Menu();
 
-        rgf.setVisible(true);
-        rgf.pack();
-        rgf.setLocationRelativeTo(null);
-        rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+                rgf.setVisible(true);
+                rgf.pack();
+                rgf.setLocationRelativeTo(null);
+                rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            }else if (mode == 1){
+                Register reg = new Register();
+                reg.setVisible(true);
+                reg.pack();
+                reg.setLocationRelativeTo(null);
+                reg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            }
         this.dispose();   
             
     }//GEN-LAST:event_newPatientMouseClicked
 
-
-    private void newPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newPatientActionPerformed
-                    // TODO add your handling code here:
-    }//GEN-LAST:event_newPatientActionPerformed
+    void getPatientData(){
+        ConnectionPostgres newConnection = new ConnectionPostgres();
+        String patientData = newConnection.recoverPatient(patientUpdate);
+        String[] datosSplit;
+        datosSplit = patientData.split(",");
+        ID.setText(datosSplit[0]);
+        FName.setText(datosSplit[1]);
+        LName.setText(datosSplit[2]);
+        cbGender.setName(datosSplit[3]);
+        //jdcFecNac.setDate(SimpleDateFormat.parse(datosSplit[4]));
+        Height.setText(datosSplit[5]);
+        Weight.setText(datosSplit[6]);
+        
+        
+        
+    }
 
     private void cbGenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbGenderActionPerformed
         // TODO add your handling code here:
@@ -358,7 +397,6 @@ public class NewPatient extends javax.swing.JFrame {
     private javax.swing.JTextField Weight;
     private javax.swing.JButton btSave;
     private javax.swing.JComboBox<String> cbGender;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -368,6 +406,7 @@ public class NewPatient extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JLabel lbSceenTitle;
+    private com.toedter.calendar.JDateChooser jdcFecNac;
+    private javax.swing.JLabel lbScreenTitle;
     // End of variables declaration//GEN-END:variables
 }

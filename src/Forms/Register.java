@@ -23,6 +23,7 @@ public class Register extends javax.swing.JFrame {
      */
     public Register() {
         initComponents();
+        getData();
     }
 
     /**
@@ -40,7 +41,6 @@ public class Register extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         btClose = new javax.swing.JToggleButton();
-        btShow = new javax.swing.JButton();
         btDelete = new javax.swing.JButton();
         btUpdate = new javax.swing.JButton();
         btNewAnalysis = new javax.swing.JButton();
@@ -98,14 +98,6 @@ public class Register extends javax.swing.JFrame {
             }
         });
 
-        btShow.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btShow.setText("Show");
-        btShow.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btShowActionPerformed(evt);
-            }
-        });
-
         btDelete.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btDelete.setText("Delete");
         btDelete.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -113,8 +105,18 @@ public class Register extends javax.swing.JFrame {
                 btDeleteMouseClicked(evt);
             }
         });
+        btDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btDeleteActionPerformed(evt);
+            }
+        });
 
         btUpdate.setText("Update");
+        btUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btUpdateActionPerformed(evt);
+            }
+        });
 
         btNewAnalysis.setText("New Analysis");
 
@@ -127,9 +129,7 @@ public class Register extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(btClose)
-                .addGap(67, 67, 67)
-                .addComponent(btShow)
-                .addGap(74, 74, 74)
+                .addGap(213, 213, 213)
                 .addComponent(btDelete)
                 .addGap(81, 81, 81)
                 .addComponent(btUpdate)
@@ -146,7 +146,6 @@ public class Register extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btClose)
-                    .addComponent(btShow)
                     .addComponent(btDelete)
                     .addComponent(btUpdate)
                     .addComponent(btNewAnalysis))
@@ -178,17 +177,10 @@ public class Register extends javax.swing.JFrame {
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_btCloseActionPerformed
 
-    //Function to retrieve and display all data stored in DB
-    private void btShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btShowActionPerformed
-        // TODO add your handling code here:
-        getData();
-    }//GEN-LAST:event_btShowActionPerformed
-
 
     //Function that "constructs" the table, by getting all data stored in DB 
     public void getData(){
-            DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
-
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
 
         modelo.setRowCount(0);
         String datoPaciente;
@@ -214,14 +206,28 @@ public class Register extends javax.swing.JFrame {
 
         int row = jTable1.getSelectedRow();
         String cedula = jTable1.getModel().getValueAt(row, 0).toString();
-        String fechAnalisis = jTable1.getModel().getValueAt(row, 1).toString();
-
         ConnectionPostgres newConnection = new ConnectionPostgres();
-
-        newConnection.deleteRegister(cedula, fechAnalisis);
+        newConnection.deleteRegister(cedula);
 
         getData();
     }//GEN-LAST:event_btDeleteMouseClicked
+
+    private void btUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btUpdateActionPerformed
+        
+        int row = jTable1.getSelectedRow();
+        String cedula = jTable1.getModel().getValueAt(row, 0).toString();
+        
+        NewPatient patient = new NewPatient(1,cedula);
+        patient.setVisible(true);
+        patient.pack();
+        patient.setLocationRelativeTo(null); 
+        patient.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }//GEN-LAST:event_btUpdateActionPerformed
+
+    private void btDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeleteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btDeleteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -263,7 +269,6 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JToggleButton btClose;
     private javax.swing.JButton btDelete;
     private javax.swing.JButton btNewAnalysis;
-    private javax.swing.JButton btShow;
     private javax.swing.JButton btUpdate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
