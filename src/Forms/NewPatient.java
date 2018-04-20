@@ -15,13 +15,21 @@ import javax.swing.JFrame;
  */
 public class NewPatient extends javax.swing.JFrame {
 
+    private int mode;
     /**
      * Creates new form NewPatient
      */
     private DataTypesValidation validate = new DataTypesValidation();
 
-    public NewPatient() {
+    public NewPatient(int mode) {
         initComponents();
+        this.mode = mode;
+        if(mode == 0){
+            lbSceenTitle.setText("Create New Patient");
+        }else if (mode == 1){
+            lbSceenTitle.setText("Update Patient");
+        }
+        
     }
 
     /**
@@ -35,25 +43,23 @@ public class NewPatient extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lbSceenTitle = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         FName = new javax.swing.JTextField();
         LName = new javax.swing.JTextField();
         ID = new javax.swing.JTextField();
-        Gender = new javax.swing.JTextField();
-        Birth = new javax.swing.JTextField();
-        Analysis = new javax.swing.JTextField();
         Weight = new javax.swing.JTextField();
         Height = new javax.swing.JTextField();
         CancelButton = new javax.swing.JButton();
-        NewPatient = new javax.swing.JButton();
+        btSave = new javax.swing.JButton();
+        cbGender = new javax.swing.JComboBox<>();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,9 +67,9 @@ public class NewPatient extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 0, 0));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Create New Patient");
+        lbSceenTitle.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lbSceenTitle.setForeground(new java.awt.Color(255, 255, 255));
+        lbSceenTitle.setText("Create New Patient");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -71,14 +77,14 @@ public class NewPatient extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(252, 252, 252)
-                .addComponent(jLabel1)
+                .addComponent(lbSceenTitle)
                 .addContainerGap(262, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(lbSceenTitle)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -97,26 +103,17 @@ public class NewPatient extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel6.setText("Date of Birth");
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel7.setText("Date of Analysis");
-
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel8.setText("Weight");
+        jLabel8.setText("Weight (Kg)");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel9.setText("Height");
+        jLabel9.setText("Height (cm)");
 
         FName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         LName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         ID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        Gender.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        Birth.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        Analysis.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         Weight.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
@@ -131,16 +128,23 @@ public class NewPatient extends javax.swing.JFrame {
             }
         });
 
-        NewPatient.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        NewPatient.setText("Save");
-        NewPatient.addMouseListener(new java.awt.event.MouseAdapter() {
+        btSave.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btSave.setText("Save");
+        btSave.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 newPatientMouseClicked(evt);
             }
         });
-        NewPatient.addActionListener(new java.awt.event.ActionListener() {
+        btSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newPatientActionPerformed(evt);
+            }
+        });
+
+        cbGender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Female", "Male" }));
+        cbGender.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbGenderActionPerformed(evt);
             }
         });
 
@@ -160,27 +164,25 @@ public class NewPatient extends javax.swing.JFrame {
                             .addComponent(jLabel5))
                         .addGap(32, 32, 32)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(LName)
+                            .addComponent(LName, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
                             .addComponent(FName)
                             .addComponent(ID)
-                            .addComponent(Gender, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE))
+                            .addComponent(cbGender, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(66, 66, 66)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
                             .addComponent(jLabel8)
                             .addComponent(jLabel9)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(27, 27, 27)
+                        .addGap(45, 45, 45)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Birth)
-                            .addComponent(Analysis)
                             .addComponent(Weight)
-                            .addComponent(Height, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)))
+                            .addComponent(Height, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(240, 240, 240)
                         .addComponent(CancelButton)
                         .addGap(80, 80, 80)
-                        .addComponent(NewPatient)))
+                        .addComponent(btSave)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -188,32 +190,33 @@ public class NewPatient extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel6)
-                    .addComponent(FName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Birth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel6)
+                        .addComponent(FName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel7)
-                    .addComponent(LName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Analysis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel8)
-                    .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(LName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9)
+                            .addComponent(Height, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(Weight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbGender))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel9)
-                    .addComponent(Gender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Height, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(NewPatient)
+                    .addComponent(btSave)
                     .addComponent(CancelButton))
                 .addContainerGap())
         );
@@ -247,25 +250,21 @@ public class NewPatient extends javax.swing.JFrame {
     //creates a new entry in DB
     private void newPatientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_newPatientMouseClicked
             String cedula = ID.getText();
-            String fechAnalisis = Analysis.getText();
             String nombre = FName.getText();
             String apellido = LName.getText();
-            String genero = Gender.getText();
-            String fechNac = Birth.getText();
+            String genero = cbGender.getSelectedItem().toString();
+            String fechNac="";
             String altura = getTextHeight();
             String peso = getTextWeight();
             
             
-            String values = "'" + cedula +  "','" + nombre + "','" + apellido + "','" + genero + "','" + fechNac + "'," + altura + "," + peso + "," + "current_date";
+            String values = "'" + cedula +  "','" + nombre + "','" + apellido + "','" + genero + "','" + fechNac + "'," + altura + "," + peso;
             
             ConnectionPostgres newConnection = new ConnectionPostgres();
             System.out.println(values);
             newConnection.insertData(values);
-            Analysis.setText(null);
-            Birth.setText(null);
             FName.setText(null);
             LName.setText(null);
-            Gender.setText(null);
             ID.setText(null);
             Weight.setText(null);
             Height.setText(null);
@@ -282,8 +281,12 @@ public class NewPatient extends javax.swing.JFrame {
 
 
     private void newPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newPatientActionPerformed
-        // TODO add your handling code here:
+                    // TODO add your handling code here:
     }//GEN-LAST:event_newPatientActionPerformed
+
+    private void cbGenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbGenderActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbGenderActionPerformed
 
     /*Codigos de excepciones
     
@@ -341,32 +344,30 @@ public class NewPatient extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewPatient().setVisible(true);
+                new NewPatient(0).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField Analysis;
-    private javax.swing.JTextField Birth;
     private javax.swing.JButton CancelButton;
     private javax.swing.JTextField FName;
-    private javax.swing.JTextField Gender;
     private javax.swing.JTextField Height;
     private javax.swing.JTextField ID;
     private javax.swing.JTextField LName;
-    private javax.swing.JButton NewPatient;
     private javax.swing.JTextField Weight;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btSave;
+    private javax.swing.JComboBox<String> cbGender;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lbSceenTitle;
     // End of variables declaration//GEN-END:variables
 }

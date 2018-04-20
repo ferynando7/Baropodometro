@@ -13,7 +13,15 @@ public class DataTypesValidation {
 
 
 
-
+    public boolean isEmpty(String field){
+        
+        if(field.equals("")){
+            return true;
+        }else{
+            return false;
+        }
+        
+    }
 
 
     /*Validacion de la cédula*/
