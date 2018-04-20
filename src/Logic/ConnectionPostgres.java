@@ -61,6 +61,31 @@ public class ConnectionPostgres {
         System.out.println("Records created successfully");
     }
 
+    
+     public void updateData(String values) {
+        //values debe estar en el formato correspondiente SQL
+        String[] datosSplit = values.split(",");
+        Connection c;
+        Statement stmt = null;
+        try {
+            c = connectDB();
+            stmt = c.createStatement();
+            String sql = "UPDATE patient set firstName = " + datosSplit[1] + ",lastName = " + datosSplit[2] + ",genre = " + datosSplit[3] + ",birthdate = " + datosSplit[4] + "," + datosSplit[5] + ",heigth  = " + datosSplit[6] + ",weight = " + datosSplit[7] + ",phone = " + datosSplit[8] + ",email = " + datosSplit[9] + " where id = " + datosSplit[0];
+            stmt.executeUpdate(sql);
+            stmt.close();
+            c.setAutoCommit(false);
+            c.commit();
+            c.close();
+        } catch (Exception e) {
+            System.err.println((new DBExceptions()).insertionError() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        System.out.println("Records updated successfully");
+    }
+    
+    
+    
+    
     /*Funcion que se encarga de recuperar los registros de la tabla paciente*/
     public ArrayList<String> recoverData() {
         Connection c;
@@ -115,7 +140,7 @@ public class ConnectionPostgres {
             String altura = rs.getString("heigth");
             String peso = rs.getString("weight");
 
-            datoPaciente = cedula + "," + "," + nombre + "," + apellido + "," + genero + "," + fechNac + "," + altura + "," + peso;
+            datoPaciente = cedula + "," + nombre + "," + apellido + "," + genero + "," + fechNac + "," + altura + "," + peso;
             
             rs.close();
             stmt.close();

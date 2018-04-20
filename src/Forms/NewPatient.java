@@ -14,6 +14,10 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -156,8 +160,6 @@ public class NewPatient extends javax.swing.JFrame {
         });
 
         jdcFecNac.setDateFormatString("yyyy-MM-dd");
-        JTextFieldDateEditor editor = (JTextFieldDateEditor) jdcFecNac.getDateEditor();
-        editor.setEditable(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -201,11 +203,10 @@ public class NewPatient extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(jLabel6)
-                        .addComponent(FName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel6)
+                    .addComponent(FName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jdcFecNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,6 +233,8 @@ public class NewPatient extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        ((JTextFieldDateEditor)jdcFecNac.getDateEditor()).setEditable(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -255,12 +258,14 @@ public class NewPatient extends javax.swing.JFrame {
                 rgf.pack();
                 rgf.setLocationRelativeTo(null);
                 rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                this.dispose();
             }else if (mode == 1){
                 Register reg = new Register();
                 reg.setVisible(true);
                 reg.pack();
                 reg.setLocationRelativeTo(null);
                 reg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                this.dispose();
             }
     }//GEN-LAST:event_cancelButtonActionPerformed
 
@@ -281,14 +286,15 @@ public class NewPatient extends javax.swing.JFrame {
             
             ConnectionPostgres newConnection = new ConnectionPostgres();
             System.out.println(values);
-            newConnection.insertData(values);
-            FName.setText(null);
+            
+           /* FName.setText(null);
             LName.setText(null);
             ID.setText(null);
             Weight.setText(null);
             Height.setText(null);
-            
+            */
             if (mode == 0){
+                newConnection.insertData(values);
                 Menu rgf = new Menu();
 
                 rgf.setVisible(true);
@@ -296,6 +302,7 @@ public class NewPatient extends javax.swing.JFrame {
                 rgf.setLocationRelativeTo(null);
                 rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             }else if (mode == 1){
+                newConnection.updateData(values);
                 Register reg = new Register();
                 reg.setVisible(true);
                 reg.pack();
@@ -311,11 +318,21 @@ public class NewPatient extends javax.swing.JFrame {
         String patientData = newConnection.recoverPatient(patientUpdate);
         String[] datosSplit;
         datosSplit = patientData.split(",");
+        System.out.println(patientData);
         ID.setText(datosSplit[0]);
         FName.setText(datosSplit[1]);
         LName.setText(datosSplit[2]);
-        cbGender.setName(datosSplit[3]);
-        //jdcFecNac.setDate(SimpleDateFormat.parse(datosSplit[4]));
+        cbGender.setSelectedItem(datosSplit[3]);
+//        cbGender.setValue(datosSplit[3]);
+        
+        Date dateValue = null;
+        try {
+            //        java.util.Date date = new SimpleDateFormat("dd-MM-yyyy").parse(dateValue);
+            jdcFecNac.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(datosSplit[4])); 
+        } catch (ParseException ex) {
+            Logger.getLogger(NewPatient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+   
         Height.setText(datosSplit[5]);
         Weight.setText(datosSplit[6]);
         
