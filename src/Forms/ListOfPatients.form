@@ -213,7 +213,6 @@
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btDeleteMouseClicked"/>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btDeleteActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btUpdate">
@@ -228,6 +227,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="New Analysis"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNewAnalysisActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

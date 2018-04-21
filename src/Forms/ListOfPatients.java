@@ -6,6 +6,7 @@
 package Forms;
 
 import Logic.ConnectionPostgres;
+import Logic.PatientGenericState;
 import java.util.ArrayList;
 import javax.swing.JTable;
 import java.util.Iterator;
@@ -16,12 +17,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author USER
  */
-public class Register extends javax.swing.JFrame {
+public class ListOfPatients extends javax.swing.JFrame {
 
     /**
      * Creates new form Register
      */
-    public Register() {
+    public ListOfPatients() {
         initComponents();
         getData();
     }
@@ -105,11 +106,6 @@ public class Register extends javax.swing.JFrame {
                 btDeleteMouseClicked(evt);
             }
         });
-        btDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btDeleteActionPerformed(evt);
-            }
-        });
 
         btUpdate.setText("Update");
         btUpdate.addActionListener(new java.awt.event.ActionListener() {
@@ -119,6 +115,11 @@ public class Register extends javax.swing.JFrame {
         });
 
         btNewAnalysis.setText("New Analysis");
+        btNewAnalysis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNewAnalysisActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -177,8 +178,21 @@ public class Register extends javax.swing.JFrame {
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_btCloseActionPerformed
 
+    //Function that deletes the data of a clicked row, which belongs to a 
+    //specific patient, and refreshes the table
+    private void btDeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btDeleteMouseClicked
+        deletePatient();
+    }//GEN-LAST:event_btDeleteMouseClicked
+    
+    private void btUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btUpdateActionPerformed
+        updatePatient();
+    }//GEN-LAST:event_btUpdateActionPerformed
 
-    //Function that "constructs" the table, by getting all data stored in DB 
+    private void btNewAnalysisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNewAnalysisActionPerformed
+        startNewAnalysis();
+    }//GEN-LAST:event_btNewAnalysisActionPerformed
+
+     //Function that "constructs" the table, by getting all data stored in DB 
     public void getData(){
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
 
@@ -197,40 +211,39 @@ public class Register extends javax.swing.JFrame {
         }
 
     }
-
-
-    //Function that deletes the data of a clicked row, which belongs to a 
-    //specific patient, and refreshes the table
-    private void btDeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btDeleteMouseClicked
-        // TODO add your handling code here:
-
+    
+    public void deletePatient(){
         int row = jTable1.getSelectedRow();
         if (row == -1) return;
         String cedula = jTable1.getModel().getValueAt(row, 0).toString();
         ConnectionPostgres newConnection = new ConnectionPostgres();
         newConnection.deleteRegister(cedula);
-
-        getData();
-    }//GEN-LAST:event_btDeleteMouseClicked
-
-    private void btUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btUpdateActionPerformed
-        
+        getData();        
+    }
+    
+    
+    public void updatePatient(){
         int row = jTable1.getSelectedRow();
         if (row == -1) return;
         String cedula = jTable1.getModel().getValueAt(row, 0).toString();
         
-        NewPatient patient = new NewPatient(1,cedula);
-        patient.setVisible(true);
-        patient.pack();
-        patient.setLocationRelativeTo(null); 
-        patient.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        PatientGenericState updPat = new PatientGenericState(cedula);
         this.dispose();
-    }//GEN-LAST:event_btUpdateActionPerformed
+    }
+    
+    public void startNewAnalysis(){
+        int row = jTable1.getSelectedRow();
+        if (row == -1) return;
+        String cedula = jTable1.getModel().getValueAt(row, 0).toString();
 
-    private void btDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeleteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btDeleteActionPerformed
-
+        ShowInformation shInf = new ShowInformation(cedula,"");
+        shInf.setVisible(true);
+        shInf.pack();
+        shInf.setLocationRelativeTo(null); 
+        shInf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -248,20 +261,21 @@ public class Register extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Register.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListOfPatients.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Register.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListOfPatients.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Register.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListOfPatients.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Register.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListOfPatients.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Register().setVisible(true);
+                new ListOfPatients().setVisible(true);
             }
         });
 

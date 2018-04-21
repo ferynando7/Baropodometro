@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import Logic.ErrorMessage;
+import Logic.PatientForm;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,31 +25,18 @@ import javax.swing.JOptionPane;
  *
  * @author USER
  */
-public class NewPatient extends javax.swing.JFrame {
+public class NewPatientInsert extends javax.swing.JFrame implements PatientForm{
+    
 
-    private int mode;
-    String patientUpdate;
-    /**
-     * Creates new form NewPatient
-     */
     private final DataTypesValidation validate = new DataTypesValidation();
     private final ErrorMessage errors = new ErrorMessage();
     
-    public NewPatient(int mode) {
+    public NewPatientInsert() {
         initComponents();
-        this.mode = mode;
         lbScreenTitle.setText("Create New Patient");
         
     }
-    
-    public NewPatient(int mode, String patientUpdate){
-        initComponents();        
-        this.mode = mode;
-        this.patientUpdate = patientUpdate;
-        lbScreenTitle.setText("Update Patient");
-        getPatientData();
-        
-    }
+            
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -148,11 +136,6 @@ public class NewPatient extends javax.swing.JFrame {
 
         btSave.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btSave.setText("Save");
-        btSave.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                newPatientMouseClicked(evt);
-            }
-        });
         btSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSaveActionPerformed(evt);
@@ -160,11 +143,6 @@ public class NewPatient extends javax.swing.JFrame {
         });
 
         cbGender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "F", "M" }));
-        cbGender.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbGenderActionPerformed(evt);
-            }
-        });
 
         jdcFecNac.setDateFormatString("yyyy-MM-dd");
         jdcFecNac.setName("jdcFecNac"); // NOI18N
@@ -259,59 +237,28 @@ public class NewPatient extends javax.swing.JFrame {
 
     //Function that closes the current window and opens the Menu form
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        if (mode == 0){
-                Menu rgf = new Menu();
-
-                rgf.setVisible(true);
-                rgf.pack();
-                rgf.setLocationRelativeTo(null);
-                rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            }else if (mode == 1){
-                Register reg = new Register();
-                reg.setVisible(true);
-                reg.pack();
-                reg.setLocationRelativeTo(null);
-                reg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            }
-        this.dispose();
+       cancelRegister();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
 
-    //Function that gets all text stored in the textboxes of the form and 
-    //creates a new entry in DB
-    private void newPatientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_newPatientMouseClicked
+    private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
+       savePatient();
+    }//GEN-LAST:event_btSaveActionPerformed
 
-    }//GEN-LAST:event_newPatientMouseClicked
+    
+    @Override
+    public void cancelRegister() {
+        Menu rgf = new Menu();
 
-    void getPatientData(){
-        ConnectionPostgres newConnection = new ConnectionPostgres();
-        String patientData = newConnection.recoverPatient(patientUpdate);
-        String[] datosSplit;
-        datosSplit = patientData.split(",");
-        ID.setText(datosSplit[0]);
-        FName.setText(datosSplit[1]);
-        LName.setText(datosSplit[2]);
-        cbGender.setSelectedItem(datosSplit[3]);
-        Date dateValue = null;
-        try {
-            //        java.util.Date date = new SimpleDateFormat("dd-MM-yyyy").parse(dateValue);
-            jdcFecNac.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(datosSplit[4])); 
-        } catch (ParseException ex) {
-            Logger.getLogger(NewPatient.class.getName()).log(Level.SEVERE, null, ex);
-        }
-   
-        Height.setText(datosSplit[5]);
-        Weight.setText(datosSplit[6]);
-        
-        
-        
+        rgf.setVisible(true);
+        rgf.pack();
+        rgf.setLocationRelativeTo(null);
+        rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
     }
 
-    private void cbGenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbGenderActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbGenderActionPerformed
-
-    private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
+    @Override
+    public void savePatient() {
         String cedula = getTextID();
         if (cedula.contains("Exception")) return;
         
@@ -343,79 +290,21 @@ public class NewPatient extends javax.swing.JFrame {
         ConnectionPostgres newConnection = new ConnectionPostgres();
         System.out.println(values);
 
-       /* FName.setText(null);
-        LName.setText(null);
-        ID.setText(null);
-        Weight.setText(null);
-        Height.setText(null);
-        */
-        if (mode == 0){
-            newConnection.insertData(values);
-            Menu rgf = new Menu();
-
-            rgf.setVisible(true);
-            rgf.pack();
-            rgf.setLocationRelativeTo(null);
-            rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        }else if (mode == 1){
-            newConnection.updateData(values);
-            Register reg = new Register();
-            reg.setVisible(true);
-            reg.pack();
-            reg.setLocationRelativeTo(null);
-            reg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        }
-        this.dispose();   
-    }//GEN-LAST:event_btSaveActionPerformed
-
-        public void saveData() {
-            String cedula = getTextID();
-            String nombre = getTextFName();
-            String apellido = getTextLName();
-            String genero = cbGender.getSelectedItem().toString();
-            String fechNac= DateFormat.getDateInstance().format(jdcFecNac.getDate());
-            String altura = getTextHeight();
-            String peso = getTextWeight();
-            
-            
-        if (nombre.contains("Exception")) {
-            FName.setText(null);
-        }
-        if (apellido.contains("Exception")) {
-            LName.setText(null);
-        }
-        if (cedula.contains("Exception")) {
-            ID.setText(null);
-        }
-        if (altura.contains("Exception")) {
-            Height.setText(null);
-        }
-        if (peso.contains("Exception")) {
-            Weight.setText(null);
-        }
-        
-        if ((nombre.contains("Exception")) || (apellido.contains("Exception")) || (cedula.contains("Exception"))
-                || (altura.contains("Exception"))|| (peso.contains("Exception")) ){
-            return;
-        } 
-            String values = "'" + cedula + "','" + nombre + "','" + apellido + "','" + genero + "','" + fechNac + "'," + altura + "," + peso;
-        System.out.println(values);
-            /*    
-        ConnectionPostgres newConnection = new ConnectionPostgres();
-        //System.out.println(values);
         newConnection.insertData(values);
-        FName.setText(null);
-        LName.setText(null);
-        ID.setText(null);
-        Weight.setText(null);
-        Height.setText(null);
         Menu rgf = new Menu();
+
         rgf.setVisible(true);
         rgf.pack();
-        rgf.setLocationRelativeTo(null); 
+        rgf.setLocationRelativeTo(null);
         rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();*/
-        }
+        this.dispose();
+    }
+
+
+
+
+    
+    
     /*Codigos de excepciones
     
     001: Tipo de dato no válido
@@ -475,20 +364,23 @@ public class NewPatient extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewPatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewPatientInsert.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewPatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewPatientInsert.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewPatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewPatientInsert.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewPatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewPatientInsert.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewPatient(0).setVisible(true);
+                new NewPatientInsert().setVisible(true);
             }
         });
     }
@@ -514,4 +406,5 @@ public class NewPatient extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser jdcFecNac;
     private javax.swing.JLabel lbScreenTitle;
     // End of variables declaration//GEN-END:variables
+
 }

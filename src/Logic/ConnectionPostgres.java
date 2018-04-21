@@ -14,6 +14,7 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class ConnectionPostgres {
 
@@ -29,8 +30,8 @@ public class ConnectionPostgres {
                     .getConnection("jdbc:postgresql://localhost/Baropodometro",
                             "postgres", "1234");
         } catch (Exception e) {
-            System.err.println((new DBExceptions()).conexionError() + ": " + e.getMessage());
-            System.exit(0);
+            String error = ((new DBExceptions()).conexionError() + ": " + e.getMessage());
+            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
         }
 
         System.out.println("Opened database successfully");
@@ -55,10 +56,11 @@ public class ConnectionPostgres {
             c.commit();
             c.close();
         } catch (Exception e) {
-            System.err.println((new DBExceptions()).insertionError() + ": " + e.getMessage());
-            System.exit(0);
+            String error = ((new DBExceptions()).insertionError() + ": " + e.getMessage());
+            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
         }
-        System.out.println("Records created successfully");
+        String success = "Patient record created successfully";
+        JOptionPane.showMessageDialog(null, success , "Great!", JOptionPane.INFORMATION_MESSAGE);
     }
 
     
@@ -77,10 +79,11 @@ public class ConnectionPostgres {
             c.commit();
             c.close();
         } catch (Exception e) {
-            System.err.println((new DBExceptions()).insertionError() + ": " + e.getMessage());
-            System.exit(0);
+            String error = ((new DBExceptions()).insertionError() + ": " + e.getMessage());
+            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
         }
-        System.out.println("Records updated successfully");
+        String success = "Patient information updated successfully";
+        JOptionPane.showMessageDialog(null, success , "Great!", JOptionPane.INFORMATION_MESSAGE);
     }
     
     
@@ -115,8 +118,8 @@ public class ConnectionPostgres {
             stmt.close();
             c.close();
         } catch (Exception e) {
-            System.err.println((new DBExceptions()).obtainingError() + ": " + e.getMessage());
-            System.exit(0);
+            String error = ((new DBExceptions()).obtainingError() + ": " + e.getMessage());
+            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
         }
         return datos;
     }
@@ -146,8 +149,8 @@ public class ConnectionPostgres {
             stmt.close();
             c.close();
         } catch (Exception e) {
-            System.err.println((new DBExceptions()).obtainingError() + ": " + e.getMessage());
-            System.exit(0);
+            String error = ((new DBExceptions()).obtainingError() + ": " + e.getMessage());
+            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
         }
         return datoPaciente;
     }
@@ -170,11 +173,102 @@ public class ConnectionPostgres {
             stmt.close();
             c.close();
         } catch (Exception e) {
-            System.err.println((new DBExceptions()).deletingError() + ": " + e.getMessage());
-            System.exit(0);
+            String error = ((new DBExceptions()).deletingError() + ": " + e.getMessage());
+            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
         }
-        System.out.println("Operation done successfully");
+        String success = "Patient deleted successfully";
+        JOptionPane.showMessageDialog(null, success , "Great!", JOptionPane.INFORMATION_MESSAGE);
 
     }
 
+    
+    
+    
+// METODOS NUEVOS   ---------------------------
+    
+    
+     public ArrayList<String> getPatient(String cedula, String lastAnalisis) {
+
+        Connection c;
+        Statement stmt = null;
+        Statement stmt2 = null;
+        ArrayList<String> list = new ArrayList<String>();
+        try {
+            c = connectDB();
+            stmt = c.createStatement();
+            stmt2 = c.createStatement();
+            String sql = "SELECT id,firstName,lastName,genre,birthDate,heigth,weight from patient where id = '" + cedula + "';";
+            String sql2 = "SELECT dateAnalysis from PatientRecord where idpatient = '" + cedula + "' order by dateAnalysis limit 1;";
+            ResultSet rs = stmt.executeQuery(sql);
+            ResultSet rs2 = stmt2.executeQuery(sql2);
+            
+            if(rs.next()){
+                list.add(rs.getString("id"));
+                list.add(rs.getString("firstName").toUpperCase());
+                list.add(rs.getString("lastName").toUpperCase());
+                list.add(rs.getString("birthDate"));
+                list.add(rs.getString("heigth"));
+                list.add(rs.getString("weight"));
+                list.add(rs.getString("genre").toUpperCase());
+            }
+            
+            
+            
+            if(rs2.next()){
+                list.add(rs2.getString("dateAnalysis"));
+            }
+            
+            rs.close();
+            rs2.close();
+            //rs2.close();
+            stmt.close();
+            c.close();
+        } catch (Exception e) {
+            System.err.println((new DBExceptions()).obtainingError() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return list;
+    }
+    
+    
+    public String dataFromDB(String id) {
+        String diagnostics = "";
+        try {
+            Connection connection = connectDB();
+            Statement st = connection.createStatement();
+            String sql = "SELECT id, diagnosis, medication FROM PatientRecord WHERE idPatient = '" + id + "'";
+            ResultSet result = st.executeQuery(sql);
+            while(result.next()) {
+                diagnostics += result.getString("id")+ ": "+result.getString("diagnosis")+"\n"
+                        +result.getString("medication")+"\n";
+            }
+            result.close();
+            st.close();
+            connection.close();
+        }catch(Exception e) {
+            System.err.println((new DBExceptions()).obtainingError() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return diagnostics;
+    }
+    
+    public void updateDB(String idRecordTextField, String idPatientTextField, String idImageTextField,
+                    String diagnosticTextArea, String medicationTextArea) {
+        String diagnostics = ""; //este sí va vacio
+        
+        try {
+            Connection connection = connectDB();
+            Statement st = connection.createStatement();
+            String sql = 
+                    "INSERT INTO PatientRecord VALUES ('"+
+                    idRecordTextField +"', '"+idPatientTextField+"', '"+idImageTextField+"', '"+
+                    diagnosticTextArea +"', '"+medicationTextArea+"', current_date)";
+            st.executeUpdate(sql);
+            st.close();
+            connection.close();
+        } catch(Exception e) {
+            System.err.println((new DBExceptions()).obtainingError() + ": " + e.getMessage());
+            System.exit(0);
+        }
+    }
 }

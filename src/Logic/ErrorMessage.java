@@ -50,7 +50,7 @@ public class ErrorMessage {
             JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
             break;            
         case "Exception 009" :
-            message = "Wrong name format";
+            message = "Wrong first name or last name format";
             JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
             break;            
          default:

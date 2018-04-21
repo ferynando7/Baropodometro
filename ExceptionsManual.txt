@@ -6,4 +6,4 @@ Exception 005		There are empty fields
 Exception 006		Height value is out of range
 Exception 007		Height must be a numeric value
 Exception 008		Weigth value is out of range
-Exception 009		Wrong name format
+Exception 009		Wrong first name or last name format
