@@ -122,7 +122,7 @@ public class Menu extends javax.swing.JFrame {
 //Opens a new Window that contains the form and function to register a new Patient
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        NewPatient rgf = new NewPatient();
+        NewPatient rgf = new NewPatient(0);
         rgf.setVisible(true);
         rgf.pack();
         rgf.setLocationRelativeTo(null); 

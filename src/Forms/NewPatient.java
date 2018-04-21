@@ -8,6 +8,17 @@ package Forms;
 import Logic.ConnectionPostgres;
 import Logic.DataTypesValidation;
 import javax.swing.JFrame;
+import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JTextFieldDateEditor;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import Logic.ErrorMessage;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,13 +26,28 @@ import javax.swing.JFrame;
  */
 public class NewPatient extends javax.swing.JFrame {
 
+    private int mode;
+    String patientUpdate;
     /**
      * Creates new form NewPatient
      */
-    private DataTypesValidation validate = new DataTypesValidation();
-
-    public NewPatient() {
+    private final DataTypesValidation validate = new DataTypesValidation();
+    private final ErrorMessage errors = new ErrorMessage();
+    
+    public NewPatient(int mode) {
         initComponents();
+        this.mode = mode;
+        lbScreenTitle.setText("Create New Patient");
+        
+    }
+    
+    public NewPatient(int mode, String patientUpdate){
+        initComponents();        
+        this.mode = mode;
+        this.patientUpdate = patientUpdate;
+        lbScreenTitle.setText("Update Patient");
+        getPatientData();
+        
     }
 
     /**
@@ -35,25 +61,23 @@ public class NewPatient extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lbScreenTitle = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         FName = new javax.swing.JTextField();
         LName = new javax.swing.JTextField();
         ID = new javax.swing.JTextField();
-        Gender = new javax.swing.JTextField();
-        Birth = new javax.swing.JTextField();
-        Analysis = new javax.swing.JTextField();
         Weight = new javax.swing.JTextField();
         Height = new javax.swing.JTextField();
         CancelButton = new javax.swing.JButton();
-        NewPatient = new javax.swing.JButton();
+        btSave = new javax.swing.JButton();
+        cbGender = new javax.swing.JComboBox<>();
+        jdcFecNac = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,9 +85,9 @@ public class NewPatient extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 0, 0));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Create New Patient");
+        lbScreenTitle.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lbScreenTitle.setForeground(new java.awt.Color(255, 255, 255));
+        lbScreenTitle.setText("Create New Patient");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -71,14 +95,14 @@ public class NewPatient extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(252, 252, 252)
-                .addComponent(jLabel1)
+                .addComponent(lbScreenTitle)
                 .addContainerGap(262, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(lbScreenTitle)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -97,26 +121,17 @@ public class NewPatient extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel6.setText("Date of Birth");
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel7.setText("Date of Analysis");
-
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel8.setText("Weight");
+        jLabel8.setText("Weight (Kg)");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel9.setText("Height");
+        jLabel9.setText("Height (cm)");
 
         FName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         LName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         ID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        Gender.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        Birth.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        Analysis.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         Weight.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
@@ -131,18 +146,29 @@ public class NewPatient extends javax.swing.JFrame {
             }
         });
 
-        NewPatient.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        NewPatient.setText("Save");
-        NewPatient.addMouseListener(new java.awt.event.MouseAdapter() {
+        btSave.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btSave.setText("Save");
+        btSave.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 newPatientMouseClicked(evt);
             }
         });
-        NewPatient.addActionListener(new java.awt.event.ActionListener() {
+        btSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newPatientActionPerformed(evt);
+                btSaveActionPerformed(evt);
             }
         });
+
+        cbGender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "F", "M" }));
+        cbGender.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbGenderActionPerformed(evt);
+            }
+        });
+
+        jdcFecNac.setDateFormatString("yyyy-MM-dd");
+        jdcFecNac.setName("jdcFecNac"); // NOI18N
+        ((JTextFieldDateEditor)jdcFecNac.getDateEditor()).setEditable(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -160,27 +186,25 @@ public class NewPatient extends javax.swing.JFrame {
                             .addComponent(jLabel5))
                         .addGap(32, 32, 32)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(LName)
+                            .addComponent(LName, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
                             .addComponent(FName)
                             .addComponent(ID)
-                            .addComponent(Gender, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE))
+                            .addComponent(cbGender, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(66, 66, 66)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
                             .addComponent(jLabel8)
                             .addComponent(jLabel9)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(27, 27, 27)
+                        .addGap(45, 45, 45)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Birth)
-                            .addComponent(Analysis)
                             .addComponent(Weight)
-                            .addComponent(Height, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)))
+                            .addComponent(Height, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                            .addComponent(jdcFecNac, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(240, 240, 240)
                         .addComponent(CancelButton)
                         .addGap(80, 80, 80)
-                        .addComponent(NewPatient)))
+                        .addComponent(btSave)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -188,32 +212,33 @@ public class NewPatient extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel6)
-                    .addComponent(FName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Birth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel6)
+                        .addComponent(FName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jdcFecNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel7)
-                    .addComponent(LName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Analysis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel8)
-                    .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(LName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9)
+                            .addComponent(Height, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(Weight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbGender))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel9)
-                    .addComponent(Gender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Height, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(NewPatient)
+                    .addComponent(btSave)
                     .addComponent(CancelButton))
                 .addContainerGap())
         );
@@ -234,57 +259,163 @@ public class NewPatient extends javax.swing.JFrame {
 
     //Function that closes the current window and opens the Menu form
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        Menu rgf = new Menu();
-        rgf.setVisible(true);
-        rgf.pack();
-        rgf.setLocationRelativeTo(null);
-        rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();        // TODO add your handling code here:
+        if (mode == 0){
+                Menu rgf = new Menu();
+
+                rgf.setVisible(true);
+                rgf.pack();
+                rgf.setLocationRelativeTo(null);
+                rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            }else if (mode == 1){
+                Register reg = new Register();
+                reg.setVisible(true);
+                reg.pack();
+                reg.setLocationRelativeTo(null);
+                reg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            }
+        this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
 
     //Function that gets all text stored in the textboxes of the form and 
     //creates a new entry in DB
     private void newPatientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_newPatientMouseClicked
-            String cedula = ID.getText();
-            String fechAnalisis = Analysis.getText();
-            String nombre = FName.getText();
-            String apellido = LName.getText();
-            String genero = Gender.getText();
-            String fechNac = Birth.getText();
+
+    }//GEN-LAST:event_newPatientMouseClicked
+
+    void getPatientData(){
+        ConnectionPostgres newConnection = new ConnectionPostgres();
+        String patientData = newConnection.recoverPatient(patientUpdate);
+        String[] datosSplit;
+        datosSplit = patientData.split(",");
+        ID.setText(datosSplit[0]);
+        FName.setText(datosSplit[1]);
+        LName.setText(datosSplit[2]);
+        cbGender.setSelectedItem(datosSplit[3]);
+        Date dateValue = null;
+        try {
+            //        java.util.Date date = new SimpleDateFormat("dd-MM-yyyy").parse(dateValue);
+            jdcFecNac.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(datosSplit[4])); 
+        } catch (ParseException ex) {
+            Logger.getLogger(NewPatient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+   
+        Height.setText(datosSplit[5]);
+        Weight.setText(datosSplit[6]);
+        
+        
+        
+    }
+
+    private void cbGenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbGenderActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbGenderActionPerformed
+
+    private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
+        String cedula = getTextID();
+        if (cedula.contains("Exception")) return;
+        
+        String nombre = getTextFName();
+        if (nombre.contains("Exception")) return;
+
+        String apellido = getTextLName();
+        if (apellido.contains("Exception")) return;
+        
+        String genero = cbGender.getSelectedItem().toString();
+        
+        String fechNac;
+        try{
+            fechNac= validate.validateDate(DateFormat.getDateInstance().format(jdcFecNac.getDate()));
+        }catch (Exception e){
+            fechNac = validate.validateDate("");
+            errors.codeSwitch(fechNac);
+            return;
+        }
+        
+        String altura = getTextHeight();
+        if (altura.contains("Exception")) return;
+
+        String peso = getTextWeight();
+        if (peso.contains("Exception")) return;
+
+        String values = "'" + cedula +  "','" + nombre + "','" + apellido + "','" + genero + "','" + fechNac + "'," + altura + "," + peso + ", ' ' , ' '";
+
+        ConnectionPostgres newConnection = new ConnectionPostgres();
+        System.out.println(values);
+
+       /* FName.setText(null);
+        LName.setText(null);
+        ID.setText(null);
+        Weight.setText(null);
+        Height.setText(null);
+        */
+        if (mode == 0){
+            newConnection.insertData(values);
+            Menu rgf = new Menu();
+
+            rgf.setVisible(true);
+            rgf.pack();
+            rgf.setLocationRelativeTo(null);
+            rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        }else if (mode == 1){
+            newConnection.updateData(values);
+            Register reg = new Register();
+            reg.setVisible(true);
+            reg.pack();
+            reg.setLocationRelativeTo(null);
+            reg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        }
+        this.dispose();   
+    }//GEN-LAST:event_btSaveActionPerformed
+
+        public void saveData() {
+            String cedula = getTextID();
+            String nombre = getTextFName();
+            String apellido = getTextLName();
+            String genero = cbGender.getSelectedItem().toString();
+            String fechNac= DateFormat.getDateInstance().format(jdcFecNac.getDate());
             String altura = getTextHeight();
             String peso = getTextWeight();
             
             
-            String values = "'" + cedula +  "','" + nombre + "','" + apellido + "','" + genero + "','" + fechNac + "'," + altura + "," + peso + "," + "current_date";
-            
-            ConnectionPostgres newConnection = new ConnectionPostgres();
-            System.out.println(values);
-            newConnection.insertData(values);
-            Analysis.setText(null);
-            Birth.setText(null);
+        if (nombre.contains("Exception")) {
             FName.setText(null);
+        }
+        if (apellido.contains("Exception")) {
             LName.setText(null);
-            Gender.setText(null);
+        }
+        if (cedula.contains("Exception")) {
             ID.setText(null);
-            Weight.setText(null);
+        }
+        if (altura.contains("Exception")) {
             Height.setText(null);
-                    Menu rgf = new Menu();
-
+        }
+        if (peso.contains("Exception")) {
+            Weight.setText(null);
+        }
+        
+        if ((nombre.contains("Exception")) || (apellido.contains("Exception")) || (cedula.contains("Exception"))
+                || (altura.contains("Exception"))|| (peso.contains("Exception")) ){
+            return;
+        } 
+            String values = "'" + cedula + "','" + nombre + "','" + apellido + "','" + genero + "','" + fechNac + "'," + altura + "," + peso;
+        System.out.println(values);
+            /*    
+        ConnectionPostgres newConnection = new ConnectionPostgres();
+        //System.out.println(values);
+        newConnection.insertData(values);
+        FName.setText(null);
+        LName.setText(null);
+        ID.setText(null);
+        Weight.setText(null);
+        Height.setText(null);
+        Menu rgf = new Menu();
         rgf.setVisible(true);
         rgf.pack();
-        rgf.setLocationRelativeTo(null);
+        rgf.setLocationRelativeTo(null); 
         rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        this.dispose();   
-            
-    }//GEN-LAST:event_newPatientMouseClicked
-
-
-    private void newPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newPatientActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_newPatientActionPerformed
-
+        this.dispose();*/
+        }
     /*Codigos de excepciones
     
     001: Tipo de dato no válido
@@ -296,21 +427,37 @@ public class NewPatient extends javax.swing.JFrame {
 
     */
     //Function that gets the string stored in ID textbox and validates it
-    public String getTextID(){
-        return validate.validateID(ID.getText());
+   public String getTextID(){
+        String id = validate.validateID(ID.getText());
+        errors.codeSwitch(id);
+        System.out.println("Retorno" + id);
+        return id;
     }
 
-    //Function that gets the string stored in Weight textbox and validates it
+
     public String getTextWeight(){
-        return validate.validateDouble(Weight.getText());
+        String weight = validate.validateDouble(Weight.getText());
+        errors.codeSwitch(weight);
+        return weight;
     }
-    //Function that gets the string stored in Height textbox and validates it
-
+    
     public String getTextHeight() {
-        return validate.validateIntegers(Height.getText(), 220);
-
+        String height = validate.validateIntegers(Height.getText(), 220);
+        errors.codeSwitch(height);
+        return height;
     }
-        
+    
+    public String getTextFName() {
+        String fName = validate.validateNames(FName.getText());
+        errors.codeSwitch(fName);
+        return fName;
+    }
+    
+    public String getTextLName() {
+        String lName = validate.validateNames(LName.getText());
+        errors.codeSwitch(lName);
+        return lName;
+    }
     /**
      * @param args the command line arguments
      */
@@ -341,32 +488,30 @@ public class NewPatient extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewPatient().setVisible(true);
+                new NewPatient(0).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField Analysis;
-    private javax.swing.JTextField Birth;
     private javax.swing.JButton CancelButton;
     private javax.swing.JTextField FName;
-    private javax.swing.JTextField Gender;
     private javax.swing.JTextField Height;
     private javax.swing.JTextField ID;
     private javax.swing.JTextField LName;
-    private javax.swing.JButton NewPatient;
     private javax.swing.JTextField Weight;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btSave;
+    private javax.swing.JComboBox<String> cbGender;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private com.toedter.calendar.JDateChooser jdcFecNac;
+    private javax.swing.JLabel lbScreenTitle;
     // End of variables declaration//GEN-END:variables
 }

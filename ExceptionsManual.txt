@@ -1,0 +1,9 @@
+Exception 001		ID must contain only numbers
+Exception 002		ID length is wrong
+Exception 003		ID number is invalid
+Exception 004		Weight value must be numeric
+Exception 005		There are empty fields
+Exception 006		Height value is out of range
+Exception 007		Height must be a numeric value
+Exception 008		Weigth value is out of range
+Exception 009		Wrong name format
