@@ -24,24 +24,21 @@ import javax.swing.JOptionPane;
  *
  * @author USER
  */
-public class NewPatient extends javax.swing.JFrame {
+public class NewPatient1 extends javax.swing.JFrame {
 
     private int mode;
-    String patientUpdate;
-    /**
-     * Creates new form NewPatient
-     */
+    public String patientUpdate;
     private final DataTypesValidation validate = new DataTypesValidation();
     private final ErrorMessage errors = new ErrorMessage();
     
-    public NewPatient(int mode) {
+    public NewPatient1(int mode) {
         initComponents();
         this.mode = mode;
         lbScreenTitle.setText("Create New Patient");
         
     }
     
-    public NewPatient(int mode, String patientUpdate){
+    public NewPatient1(int mode, String patientUpdate){
         initComponents();        
         this.mode = mode;
         this.patientUpdate = patientUpdate;
@@ -148,11 +145,6 @@ public class NewPatient extends javax.swing.JFrame {
 
         btSave.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btSave.setText("Save");
-        btSave.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                newPatientMouseClicked(evt);
-            }
-        });
         btSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSaveActionPerformed(evt);
@@ -160,11 +152,6 @@ public class NewPatient extends javax.swing.JFrame {
         });
 
         cbGender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "F", "M" }));
-        cbGender.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbGenderActionPerformed(evt);
-            }
-        });
 
         jdcFecNac.setDateFormatString("yyyy-MM-dd");
         jdcFecNac.setName("jdcFecNac"); // NOI18N
@@ -267,7 +254,7 @@ public class NewPatient extends javax.swing.JFrame {
                 rgf.setLocationRelativeTo(null);
                 rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             }else if (mode == 1){
-                Register reg = new Register();
+                ListOfPatients reg = new ListOfPatients();
                 reg.setVisible(true);
                 reg.pack();
                 reg.setLocationRelativeTo(null);
@@ -276,12 +263,6 @@ public class NewPatient extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
-
-    //Function that gets all text stored in the textboxes of the form and 
-    //creates a new entry in DB
-    private void newPatientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_newPatientMouseClicked
-
-    }//GEN-LAST:event_newPatientMouseClicked
 
     void getPatientData(){
         ConnectionPostgres newConnection = new ConnectionPostgres();
@@ -297,7 +278,7 @@ public class NewPatient extends javax.swing.JFrame {
             //        java.util.Date date = new SimpleDateFormat("dd-MM-yyyy").parse(dateValue);
             jdcFecNac.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(datosSplit[4])); 
         } catch (ParseException ex) {
-            Logger.getLogger(NewPatient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NewPatient1.class.getName()).log(Level.SEVERE, null, ex);
         }
    
         Height.setText(datosSplit[5]);
@@ -307,11 +288,14 @@ public class NewPatient extends javax.swing.JFrame {
         
     }
 
-    private void cbGenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbGenderActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbGenderActionPerformed
-
     private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
+       saveData();
+    }//GEN-LAST:event_btSaveActionPerformed
+
+    
+    
+    public void saveData() {
+
         String cedula = getTextID();
         if (cedula.contains("Exception")) return;
         
@@ -343,12 +327,6 @@ public class NewPatient extends javax.swing.JFrame {
         ConnectionPostgres newConnection = new ConnectionPostgres();
         System.out.println(values);
 
-       /* FName.setText(null);
-        LName.setText(null);
-        ID.setText(null);
-        Weight.setText(null);
-        Height.setText(null);
-        */
         if (mode == 0){
             newConnection.insertData(values);
             Menu rgf = new Menu();
@@ -359,63 +337,15 @@ public class NewPatient extends javax.swing.JFrame {
             rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         }else if (mode == 1){
             newConnection.updateData(values);
-            Register reg = new Register();
+            ListOfPatients reg = new ListOfPatients();
             reg.setVisible(true);
             reg.pack();
             reg.setLocationRelativeTo(null);
             reg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         }
         this.dispose();   
-    }//GEN-LAST:event_btSaveActionPerformed
 
-        public void saveData() {
-            String cedula = getTextID();
-            String nombre = getTextFName();
-            String apellido = getTextLName();
-            String genero = cbGender.getSelectedItem().toString();
-            String fechNac= DateFormat.getDateInstance().format(jdcFecNac.getDate());
-            String altura = getTextHeight();
-            String peso = getTextWeight();
-            
-            
-        if (nombre.contains("Exception")) {
-            FName.setText(null);
-        }
-        if (apellido.contains("Exception")) {
-            LName.setText(null);
-        }
-        if (cedula.contains("Exception")) {
-            ID.setText(null);
-        }
-        if (altura.contains("Exception")) {
-            Height.setText(null);
-        }
-        if (peso.contains("Exception")) {
-            Weight.setText(null);
-        }
-        
-        if ((nombre.contains("Exception")) || (apellido.contains("Exception")) || (cedula.contains("Exception"))
-                || (altura.contains("Exception"))|| (peso.contains("Exception")) ){
-            return;
-        } 
-            String values = "'" + cedula + "','" + nombre + "','" + apellido + "','" + genero + "','" + fechNac + "'," + altura + "," + peso;
-        System.out.println(values);
-            /*    
-        ConnectionPostgres newConnection = new ConnectionPostgres();
-        //System.out.println(values);
-        newConnection.insertData(values);
-        FName.setText(null);
-        LName.setText(null);
-        ID.setText(null);
-        Weight.setText(null);
-        Height.setText(null);
-        Menu rgf = new Menu();
-        rgf.setVisible(true);
-        rgf.pack();
-        rgf.setLocationRelativeTo(null); 
-        rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();*/
-        }
+    }
     /*Codigos de excepciones
     
     001: Tipo de dato no válido
@@ -475,20 +405,21 @@ public class NewPatient extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewPatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewPatient1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewPatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewPatient1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewPatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewPatient1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewPatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewPatient1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewPatient(0).setVisible(true);
+                new NewPatient1(0).setVisible(true);
             }
         });
     }

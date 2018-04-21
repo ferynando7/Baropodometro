@@ -5,6 +5,7 @@
  */
 package Forms;
 
+import Logic.PatientGenericState;
 import javax.swing.JFrame;
 
 /**
@@ -32,8 +33,8 @@ public class Menu extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btRegister = new javax.swing.JButton();
+        btListPatients = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -62,19 +63,19 @@ public class Menu extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton1.setText("Register New Patient");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btRegister.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btRegister.setText("Register New Patient");
+        btRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btRegisterActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton2.setText("Patients Registered");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btListPatients.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btListPatients.setText("Patients Registered");
+        btListPatients.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btListPatientsActionPerformed(evt);
             }
         });
 
@@ -88,8 +89,8 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(btRegister)
+                    .addComponent(btListPatients))
                 .addGap(54, 54, 54))
         );
         jPanel1Layout.setVerticalGroup(
@@ -97,9 +98,9 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41)
-                .addComponent(jButton1)
+                .addComponent(btRegister)
                 .addGap(41, 41, 41)
-                .addComponent(jButton2)
+                .addComponent(btListPatients)
                 .addGap(0, 37, Short.MAX_VALUE))
         );
 
@@ -121,24 +122,27 @@ public class Menu extends javax.swing.JFrame {
 
 //Opens a new Window that contains the form and function to register a new Patient
     
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        NewPatient rgf = new NewPatient(0);
+    private void btRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRegisterActionPerformed
+        /*NewPatient rgf = new NewPatient(0);
         rgf.setVisible(true);
         rgf.pack();
         rgf.setLocationRelativeTo(null); 
         rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        */
+        PatientGenericState newPat = new PatientGenericState(0);
+        this.dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_btRegisterActionPerformed
 
     //Opens a new Window that contains the form and function to display all registered patients
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Register rgf = new Register();
+    private void btListPatientsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btListPatientsActionPerformed
+        ListOfPatients rgf = new ListOfPatients();
         rgf.setVisible(true);
         rgf.pack();
         rgf.setLocationRelativeTo(null); 
         rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btListPatientsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -176,8 +180,8 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btListPatients;
+    private javax.swing.JButton btRegister;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
