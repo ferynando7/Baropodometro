@@ -115,6 +115,11 @@ public class ListOfPatients extends javax.swing.JFrame {
         });
 
         btNewAnalysis.setText("New Analysis");
+        btNewAnalysis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNewAnalysisActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -176,12 +181,16 @@ public class ListOfPatients extends javax.swing.JFrame {
     //Function that deletes the data of a clicked row, which belongs to a 
     //specific patient, and refreshes the table
     private void btDeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btDeleteMouseClicked
-      deletePatient();
+        deletePatient();
     }//GEN-LAST:event_btDeleteMouseClicked
     
     private void btUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btUpdateActionPerformed
         updatePatient();
     }//GEN-LAST:event_btUpdateActionPerformed
+
+    private void btNewAnalysisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNewAnalysisActionPerformed
+        startNewAnalysis();
+    }//GEN-LAST:event_btNewAnalysisActionPerformed
 
      //Function that "constructs" the table, by getting all data stored in DB 
     public void getData(){
@@ -222,6 +231,18 @@ public class ListOfPatients extends javax.swing.JFrame {
         this.dispose();
     }
     
+    public void startNewAnalysis(){
+        int row = jTable1.getSelectedRow();
+        if (row == -1) return;
+        String cedula = jTable1.getModel().getValueAt(row, 0).toString();
+
+        ShowInformation shInf = new ShowInformation(cedula,"");
+        shInf.setVisible(true);
+        shInf.pack();
+        shInf.setLocationRelativeTo(null); 
+        shInf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }
     
     /**
      * @param args the command line arguments

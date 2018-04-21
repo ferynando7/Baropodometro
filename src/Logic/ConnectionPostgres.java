@@ -181,4 +181,94 @@ public class ConnectionPostgres {
 
     }
 
+    
+    
+    
+// METODOS NUEVOS   ---------------------------
+    
+    
+     public ArrayList<String> getPatient(String cedula, String lastAnalisis) {
+
+        Connection c;
+        Statement stmt = null;
+        Statement stmt2 = null;
+        ArrayList<String> list = new ArrayList<String>();
+        try {
+            c = connectDB();
+            stmt = c.createStatement();
+            stmt2 = c.createStatement();
+            String sql = "SELECT id,firstName,lastName,genre,birthDate,heigth,weight from patient where id = '" + cedula + "';";
+            String sql2 = "SELECT dateAnalysis from PatientRecord where idpatient = '" + cedula + "' order by dateAnalysis limit 1;";
+            ResultSet rs = stmt.executeQuery(sql);
+            ResultSet rs2 = stmt2.executeQuery(sql2);
+            
+            if(rs.next()){
+                list.add(rs.getString("id"));
+                list.add(rs.getString("firstName").toUpperCase());
+                list.add(rs.getString("lastName").toUpperCase());
+                list.add(rs.getString("birthDate"));
+                list.add(rs.getString("heigth"));
+                list.add(rs.getString("weight"));
+                list.add(rs.getString("genre").toUpperCase());
+            }
+            
+            
+            
+            if(rs2.next()){
+                list.add(rs2.getString("dateAnalysis"));
+            }
+            
+            rs.close();
+            rs2.close();
+            //rs2.close();
+            stmt.close();
+            c.close();
+        } catch (Exception e) {
+            System.err.println((new DBExceptions()).obtainingError() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return list;
+    }
+    
+    
+    public String dataFromDB(String id) {
+        String diagnostics = "";
+        try {
+            Connection connection = connectDB();
+            Statement st = connection.createStatement();
+            String sql = "SELECT id, diagnosis, medication FROM PatientRecord WHERE idPatient = '" + id + "'";
+            ResultSet result = st.executeQuery(sql);
+            while(result.next()) {
+                diagnostics += result.getString("id")+ ": "+result.getString("diagnosis")+"\n"
+                        +result.getString("medication")+"\n";
+            }
+            result.close();
+            st.close();
+            connection.close();
+        }catch(Exception e) {
+            System.err.println((new DBExceptions()).obtainingError() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return diagnostics;
+    }
+    
+    public void updateDB(String idRecordTextField, String idPatientTextField, String idImageTextField,
+                    String diagnosticTextArea, String medicationTextArea) {
+        String diagnostics = ""; //este sí va vacio
+        
+        try {
+            Connection connection = connectDB();
+            Statement st = connection.createStatement();
+            String sql = 
+                    "INSERT INTO PatientRecord VALUES ('"+
+                    idRecordTextField +"', '"+idPatientTextField+"', '"+idImageTextField+"', '"+
+                    diagnosticTextArea +"', '"+medicationTextArea+"', current_date)";
+            st.executeUpdate(sql);
+            st.close();
+            connection.close();
+        } catch(Exception e) {
+            System.err.println((new DBExceptions()).obtainingError() + ": " + e.getMessage());
+            System.exit(0);
+        }
+    }
 }
