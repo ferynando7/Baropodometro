@@ -13,47 +13,45 @@ public class DataTypesValidation {
 
 
 
-    public boolean isEmpty(String field){
-        
-        if(field.equals("")){
-            return true;
-        }else{
-            return false;
-        }
-        
-    }
-
-
     /*Validacion de la cédula*/
 
     public String validateID(String id){
 
-        if (id.length()==10){
+        if (!id.isEmpty()){
             if (isNumeric(id)){
+                if (id.length()==10){
 
-                if(codProvCorrect(id) && digVerifCorrect(id) ){
-                    return id;
+                    if(codProvCorrect(id) && digVerifCorrect(id) ){
+                        return id;
+                    }else{
+                        return "Exception 003";
+                    }
                 }else{
-                    return "Exception 003";
+                    return "Exception 002";
                 }
             }else{
                 return "Exception 001";
             }
         }else{
-            return "Exception 002";
+            return "Exception 005";
         }
     }
 
         /* Validación de enteros*/
         public String validateIntegers(String height, int limit) {
-            if(isNumeric(height)) {
-                if(Integer.parseInt(height)>0 && Integer.parseInt(height)<=limit) {
-                    return height;
-                } else {
-                    return "Out of range";
+            
+            if (!height.isEmpty()){
+                if(isNumeric(height)) {
+                    if(Integer.parseInt(height)>0 && Integer.parseInt(height)<=limit) {
+                        return height;
+                    } else {
+                        return "Exception 006";
+                    }
                 }
+                return "Exception 007";
+            }else{
+                return "Exception 005";
             }
-            return "Non numeric";
         }
 
     /*Se valida si un string es numerico*/
@@ -114,15 +112,20 @@ public class DataTypesValidation {
 /*Validación de doubles*/
 
     public String validateDouble(String peso){
-        if (isDouble(peso)){
-            double pesoenDouble=Double.parseDouble(peso);
-            if(pesoenDouble>0){
-               return peso;
+
+        if (!peso.isEmpty()){
+            if (isDouble(peso)){
+                double pesoenDouble=Double.parseDouble(peso);
+                if(pesoenDouble>0){
+                   return peso;
+                }else{
+                    return "Exception 008";
+                           }
             }else{
-                return "Exception 004";
-                       }
+                 return "Exception 004";
+            }
         }else{
-             return "Exception 001";
+            return "Exception 005";
         }
 
     }
@@ -144,13 +147,13 @@ public class DataTypesValidation {
     or symbols*/
     public String validateNames(String name) {
 
-
+        String aux = name;
         name = name.toLowerCase();
         String alphabet = "abcdefghijklmnopqrstuvwxyzñáéíóú";
         int count = 0;
 
         if (name.isEmpty()) {
-            return "The name cannot be null";
+            return "Exception 005";
         } else {
             for (int i = 0; i < name.length(); i++) {
                 if (alphabet.indexOf(name.charAt(i)) != -1) {
@@ -159,10 +162,19 @@ public class DataTypesValidation {
             }
 
             if (count == name.length()) {
-                return "ok";
+                return aux;
             } else {
-                return "Wrong name format";
+                return "Exception 009";
             }
+        }
+    }
+    
+    public String validateDate(String date) {
+
+        if (date.isEmpty()) {
+            return "Exception 005";
+        }else{
+            return date;
         }
     }
 

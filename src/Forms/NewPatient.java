@@ -15,6 +15,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import Logic.ErrorMessage;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -165,6 +168,7 @@ public class NewPatient extends javax.swing.JFrame {
 
         jdcFecNac.setDateFormatString("yyyy-MM-dd");
         jdcFecNac.setName("jdcFecNac"); // NOI18N
+        ((JTextFieldDateEditor)jdcFecNac.getDateEditor()).setEditable(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -269,6 +273,7 @@ public class NewPatient extends javax.swing.JFrame {
                 reg.setLocationRelativeTo(null);
                 reg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             }
+        this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
 
@@ -286,8 +291,15 @@ public class NewPatient extends javax.swing.JFrame {
         ID.setText(datosSplit[0]);
         FName.setText(datosSplit[1]);
         LName.setText(datosSplit[2]);
-        cbGender.setName(datosSplit[3]);
-        //jdcFecNac.setDate(SimpleDateFormat.parse(datosSplit[4]));
+        cbGender.setSelectedItem(datosSplit[3]);
+        Date dateValue = null;
+        try {
+            //        java.util.Date date = new SimpleDateFormat("dd-MM-yyyy").parse(dateValue);
+            jdcFecNac.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(datosSplit[4])); 
+        } catch (ParseException ex) {
+            Logger.getLogger(NewPatient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+   
         Height.setText(datosSplit[5]);
         Weight.setText(datosSplit[6]);
         
@@ -300,7 +312,60 @@ public class NewPatient extends javax.swing.JFrame {
     }//GEN-LAST:event_cbGenderActionPerformed
 
     private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
-     saveData();
+        String cedula = getTextID();
+        if (cedula.contains("Exception")) return;
+        
+        String nombre = getTextFName();
+        if (nombre.contains("Exception")) return;
+
+        String apellido = getTextLName();
+        if (apellido.contains("Exception")) return;
+        
+        String genero = cbGender.getSelectedItem().toString();
+        
+        String fechNac;
+        try{
+            fechNac= validate.validateDate(DateFormat.getDateInstance().format(jdcFecNac.getDate()));
+        }catch (Exception e){
+            fechNac = validate.validateDate("");
+            errors.codeSwitch(fechNac);
+            return;
+        }
+        
+        String altura = getTextHeight();
+        if (altura.contains("Exception")) return;
+
+        String peso = getTextWeight();
+        if (peso.contains("Exception")) return;
+
+        String values = "'" + cedula +  "','" + nombre + "','" + apellido + "','" + genero + "','" + fechNac + "'," + altura + "," + peso + ", ' ' , ' '";
+
+        ConnectionPostgres newConnection = new ConnectionPostgres();
+        System.out.println(values);
+
+       /* FName.setText(null);
+        LName.setText(null);
+        ID.setText(null);
+        Weight.setText(null);
+        Height.setText(null);
+        */
+        if (mode == 0){
+            newConnection.insertData(values);
+            Menu rgf = new Menu();
+
+            rgf.setVisible(true);
+            rgf.pack();
+            rgf.setLocationRelativeTo(null);
+            rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        }else if (mode == 1){
+            newConnection.updateData(values);
+            Register reg = new Register();
+            reg.setVisible(true);
+            reg.pack();
+            reg.setLocationRelativeTo(null);
+            reg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        }
+        this.dispose();   
     }//GEN-LAST:event_btSaveActionPerformed
 
         public void saveData() {

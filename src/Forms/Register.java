@@ -205,6 +205,7 @@ public class Register extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         int row = jTable1.getSelectedRow();
+        if (row == -1) return;
         String cedula = jTable1.getModel().getValueAt(row, 0).toString();
         ConnectionPostgres newConnection = new ConnectionPostgres();
         newConnection.deleteRegister(cedula);
@@ -215,6 +216,7 @@ public class Register extends javax.swing.JFrame {
     private void btUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btUpdateActionPerformed
         
         int row = jTable1.getSelectedRow();
+        if (row == -1) return;
         String cedula = jTable1.getModel().getValueAt(row, 0).toString();
         
         NewPatient patient = new NewPatient(1,cedula);
