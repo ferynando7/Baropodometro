@@ -23,7 +23,7 @@ public class ErrorMessage {
             break;
          case "Exception 002":
              message = "ID length is wrong";
-            JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);             
+             JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);             
              break;
         case "Exception 003" :
             message = "ID number is invalid";

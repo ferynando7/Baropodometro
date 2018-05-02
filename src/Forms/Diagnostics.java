@@ -4,7 +4,8 @@
  * and open the template in the editor.
  */
 package Forms;
-import Logic.ConnectionPostgres; 
+
+import Logic.ConnectionPostgres;
 import javax.swing.JFrame;
 
 /**
@@ -14,6 +15,7 @@ import javax.swing.JFrame;
 public class Diagnostics extends javax.swing.JPanel {
 
     private int width = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
+
     /**
      * Creates new form Diagnostics
      */
@@ -38,11 +40,13 @@ public class Diagnostics extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(204, 255, 204));
 
+        jTextArea1.setEditable(false);
         jTextArea1.setBackground(new java.awt.Color(204, 255, 204));
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
+        jTextField3.setEditable(false);
         jTextField3.setBackground(new java.awt.Color(255, 0, 0));
         jTextField3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jTextField3.setForeground(new java.awt.Color(255, 255, 255));

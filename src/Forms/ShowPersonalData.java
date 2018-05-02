@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Forms;
+
 import Logic.*;
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ public class ShowPersonalData extends javax.swing.JPanel {
     /**
      * Creates new form ShowPersonalData
      */
-    public ShowPersonalData(String id, String analysis) {
+    public ShowPersonalData() {
         initComponents();
     }
 
