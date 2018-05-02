@@ -86,7 +86,7 @@ public class DataTypesValidation {
         int sumaPares=0;
         int total;
 
-        for (int i = impar; i < 9;i=i+2){
+        for (int i = impar; i < 10;i=i+2){
             int valueImpar = Character.getNumericValue(id.charAt(i))*2;
 
             if(valueImpar <10){

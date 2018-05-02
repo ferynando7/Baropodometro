@@ -14,11 +14,12 @@ import javax.swing.JFrame;
  */
 public class Menu extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Menu
-     */
+    private int width = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
+    private int heigth = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
+    
     public Menu() {
         initComponents();
+        this.setLocation(width / 2 - this.getWidth() / 2, heigth / 2 - this.getHeight() / 2);
     }
 
     /**

@@ -21,42 +21,50 @@ public class ShowInformation extends javax.swing.JFrame {
      */
     private int width = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
     private int heigth = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
-    
-    public ShowInformation(String id, String analysis) {
-        initComponents(id, analysis);
-        this.setLocation(width/2 - this.getWidth()/2, 0);
-        //this.setExtendedState(MAXIMIZED_BOTH);
+    String id, firstName, lastName, gender, birdth, weigth, height;
+
+    public ShowInformation() {
+        initComponents();
+        this.setLocation(width / 2 - this.getWidth() / 2, 0);
+    }
+
+    public void setValues(String id, String firstName, String lastName,
+            String gender, String birdth, String weigth, String height) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.birdth = birdth;
+        this.weigth = weigth;
+        this.height = height;
+    }
+
+    public ShowPersonalData setValuesPane() {
+
+        ShowPersonalData pane = new ShowPersonalData();
         ConnectionPostgres con = new ConnectionPostgres();
-        ArrayList<String> list = con.getPatient(id, analysis);
-        jTextField3.setText("PATIENT " + list.get(1) + " " + list.get(2));
-        
-        ShowPersonalData pane = setValues(id, analysis);
-        
+        pane.textID.setText(id);
+        pane.textName.setText(firstName);
+        pane.textLastName.setText(lastName);
+        pane.textBirdth.setText(birdth);
+        pane.textHeigth.setText(height);
+        pane.textWidth.setText(weigth);
+        pane.textGender.setText(gender);
+        pane.textAnalysis.setText(con.getLastAnalysis(id));
+        pane.setSize(jPanel2.getWidth(), jPanel2.getHeight());
+        pane.setLocation(0, 0);
+        pane.setBackground(new Color(204, 255, 204));
+        jPanel2.setBackground(new Color(204, 255, 204));
+
+        return pane;
+    }
+
+    public void createPane() {
+        jTextField3.setText("PATIENT " + firstName + " " + lastName);
+        ShowPersonalData pane = setValuesPane();
         jPanel2.removeAll();
         jPanel2.add(pane, BorderLayout.CENTER);
         jPanel2.revalidate();
-    }
-    
-    public ShowPersonalData setValues(String id, String analysis){
-        
-        ShowPersonalData pane = new ShowPersonalData(id, analysis);
-        ConnectionPostgres con = new ConnectionPostgres();
-        ArrayList<String> list = con.getPatient(id, analysis);
-        System.out.println(list.get(6));
-        pane.textID.setText(list.get(0));
-        pane.textName.setText(list.get(1));
-        pane.textLastName.setText(list.get(2));
-        pane.textBirdth.setText(list.get(3));
-        pane.textHeigth.setText(list.get(4));
-        pane.textWidth.setText(list.get(5));
-        pane.textGender.setText(list.get(6));
-        pane.textAnalysis.setText(list.get(7));
-        pane.setSize(jPanel2.getWidth(), jPanel2.getHeight());
-        pane.setLocation(0, 0);
-        pane.setBackground(new Color(204,255,204));
-        jPanel2.setBackground(new Color(204,255,204));
-        
-        return pane;
     }
 
     /**
@@ -66,14 +74,14 @@ public class ShowInformation extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents(String id, String analysis) {
+    private void initComponents() {
 
         jTextField1 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         panelButtons = new javax.swing.JPanel();
         buttonInformation = new javax.swing.JButton();
         buttonDiagnosis = new javax.swing.JButton();
-        buttonNewDiagnosTIC = new javax.swing.JButton();
+        buttonNewDiagnostic = new javax.swing.JButton();
         jTextField3 = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
 
@@ -100,7 +108,7 @@ public class ShowInformation extends javax.swing.JFrame {
         buttonInformation.setText("PERSONAL INFORMATION");
         buttonInformation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonInformationActionPerformed(evt, id, analysis);
+                buttonInformationActionPerformed(evt);
             }
         });
 
@@ -108,15 +116,15 @@ public class ShowInformation extends javax.swing.JFrame {
         buttonDiagnosis.setText("DIAGNOSIS");
         buttonDiagnosis.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonDiagnosisActionPerformed(evt, id);
+                buttonDiagnosisActionPerformed(evt);
             }
         });
 
-        buttonNewDiagnosTIC.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        buttonNewDiagnosTIC.setText("NEW DIAGNOSTIC");
-        buttonNewDiagnosTIC.addActionListener(new java.awt.event.ActionListener() {
+        buttonNewDiagnostic.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        buttonNewDiagnostic.setText("NEW DIAGNOSTIC");
+        buttonNewDiagnostic.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonNewDiagnosTICActionPerformed(evt, id);
+                buttonNewDiagnosticActionPerformed(evt);
             }
         });
 
@@ -126,7 +134,7 @@ public class ShowInformation extends javax.swing.JFrame {
             panelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(buttonInformation, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
             .addComponent(buttonDiagnosis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(buttonNewDiagnosTIC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(buttonNewDiagnostic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelButtonsLayout.setVerticalGroup(
             panelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,7 +143,7 @@ public class ShowInformation extends javax.swing.JFrame {
                 .addGap(42, 42, 42)
                 .addComponent(buttonDiagnosis, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                .addComponent(buttonNewDiagnosTIC, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(buttonNewDiagnostic, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -155,6 +163,7 @@ public class ShowInformation extends javax.swing.JFrame {
                 .addContainerGap(183, Short.MAX_VALUE))
         );
 
+        jTextField3.setEditable(false);
         jTextField3.setBackground(new java.awt.Color(255, 0, 0));
         jTextField3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jTextField3.setForeground(new java.awt.Color(255, 255, 255));
@@ -211,19 +220,19 @@ public class ShowInformation extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void buttonInformationActionPerformed(java.awt.event.ActionEvent evt, String id, String analysis) {//GEN-FIRST:event_buttonInformationActionPerformed
-        ShowPersonalData pane = setValues(id, analysis);
+    private void buttonInformationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonInformationActionPerformed
+        ShowPersonalData pane = setValuesPane();
         jPanel2.removeAll();
         jPanel2.add(pane, BorderLayout.CENTER);
         jPanel2.revalidate();
         jPanel2.repaint();
     }//GEN-LAST:event_buttonInformationActionPerformed
 
-    private void buttonDiagnosisActionPerformed(java.awt.event.ActionEvent evt, String id) {//GEN-FIRST:event_buttonDiagnosisActionPerformed
+    private void buttonDiagnosisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDiagnosisActionPerformed
         jPanel2.removeAll();
         Diagnostics diagnosis = new Diagnostics(id);
         diagnosis.setSize(jPanel2.getWidth(), jPanel2.getHeight());
-        diagnosis.setLocation(0,0);
+        diagnosis.setLocation(0, 0);
         jPanel2.add(diagnosis, BorderLayout.CENTER);
         jPanel2.revalidate();
         jPanel2.repaint();
@@ -233,11 +242,11 @@ public class ShowInformation extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
 
-    private void buttonNewDiagnosTICActionPerformed(java.awt.event.ActionEvent evt, String id) {//GEN-FIRST:event_buttonNewDiagnosTICActionPerformed
-        AddDiagnostic addD = new AddDiagnostic(id);
-        addD.setLocation(width/2 - addD.getWidth()/2, heigth/2 - addD.getHeight()/2);
+    private void buttonNewDiagnosticActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNewDiagnosticActionPerformed
+        AddNewDiagnostic addD = new AddNewDiagnostic(id);
+        addD.setLocation(width / 2 - addD.getWidth() / 2, heigth / 2 - addD.getHeight() / 2);
         addD.setVisible(true);
-    }//GEN-LAST:event_buttonNewDiagnosTICActionPerformed
+    }//GEN-LAST:event_buttonNewDiagnosticActionPerformed
 
     /**
      * @param args the command line arguments
@@ -269,7 +278,7 @@ public class ShowInformation extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-      
+
             }
         });
     }
@@ -277,7 +286,7 @@ public class ShowInformation extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonDiagnosis;
     private javax.swing.JButton buttonInformation;
-    private javax.swing.JButton buttonNewDiagnosTIC;
+    private javax.swing.JButton buttonNewDiagnostic;
     private javax.swing.JPanel jPanel1;
     public static javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTextField1;

@@ -114,7 +114,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="buttonInformation" alignment="0" pref="250" max="32767" attributes="0"/>
                   <Component id="buttonDiagnosis" alignment="0" max="32767" attributes="0"/>
-                  <Component id="buttonNewDiagnosTIC" alignment="0" max="32767" attributes="0"/>
+                  <Component id="buttonNewDiagnostic" alignment="0" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -124,7 +124,7 @@
                       <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                       <Component id="buttonDiagnosis" min="-2" pref="60" max="-2" attributes="0"/>
                       <EmptySpace pref="44" max="32767" attributes="0"/>
-                      <Component id="buttonNewDiagnosTIC" min="-2" pref="60" max="-2" attributes="0"/>
+                      <Component id="buttonNewDiagnostic" min="-2" pref="60" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -152,7 +152,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonDiagnosisActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="buttonNewDiagnosTIC">
+            <Component class="javax.swing.JButton" name="buttonNewDiagnostic">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
@@ -160,7 +160,7 @@
                 <Property name="text" type="java.lang.String" value="NEW DIAGNOSTIC"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonNewDiagnosTICActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonNewDiagnosticActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
@@ -169,6 +169,7 @@
     </Container>
     <Component class="javax.swing.JTextField" name="jTextField3">
       <Properties>
+        <Property name="editable" type="boolean" value="false"/>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="0" red="ff" type="rgb"/>
         </Property>

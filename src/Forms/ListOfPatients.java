@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javax.swing.JTable;
 import java.util.Iterator;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -183,7 +184,7 @@ public class ListOfPatients extends javax.swing.JFrame {
     private void btDeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btDeleteMouseClicked
         deletePatient();
     }//GEN-LAST:event_btDeleteMouseClicked
-    
+
     private void btUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btUpdateActionPerformed
         updatePatient();
     }//GEN-LAST:event_btUpdateActionPerformed
@@ -192,8 +193,8 @@ public class ListOfPatients extends javax.swing.JFrame {
         startNewAnalysis();
     }//GEN-LAST:event_btNewAnalysisActionPerformed
 
-     //Function that "constructs" the table, by getting all data stored in DB 
-    public void getData(){
+    //Function that "constructs" the table, by getting all data stored in DB 
+    public void getData() {
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
 
         modelo.setRowCount(0);
@@ -207,43 +208,63 @@ public class ListOfPatients extends javax.swing.JFrame {
             datosSplit = datoPaciente.split(",");
 
             modelo.addRow(new Object[]{datosSplit[0], datosSplit[1], datosSplit[2], datosSplit[3], datosSplit[4], datosSplit[5], datosSplit[6], datosSplit[7]});
-
         }
+    }
 
-    }
-    
-    public void deletePatient(){
+    public void deletePatient() {
         int row = jTable1.getSelectedRow();
-        if (row == -1) return;
-        String cedula = jTable1.getModel().getValueAt(row, 0).toString();
-        ConnectionPostgres newConnection = new ConnectionPostgres();
-        newConnection.deleteRegister(cedula);
-        getData();        
+        if (row == -1) {
+            String info = "Please select a patient first!";
+            JOptionPane.showMessageDialog(null, info, "Error", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            String conf = "Are you sure to delete patient " + jTable1.getModel().getValueAt(row, 2).toString() + " " + jTable1.getModel().getValueAt(row, 3).toString() + "?";
+            int resp = JOptionPane.showConfirmDialog(null, conf, "Warning!", JOptionPane.YES_NO_OPTION);
+            if (resp == 0) {
+                String cedula = jTable1.getModel().getValueAt(row, 0).toString();
+                ConnectionPostgres newConnection = new ConnectionPostgres();
+                newConnection.deleteRegister(cedula);
+                getData();
+            }
+        }
     }
-    
-    
-    public void updatePatient(){
-        int row = jTable1.getSelectedRow();
-        if (row == -1) return;
-        String cedula = jTable1.getModel().getValueAt(row, 0).toString();
-        
-        PatientGenericState updPat = new PatientGenericState(cedula);
-        this.dispose();
-    }
-    
-    public void startNewAnalysis(){
-        int row = jTable1.getSelectedRow();
-        if (row == -1) return;
-        String cedula = jTable1.getModel().getValueAt(row, 0).toString();
 
-        ShowInformation shInf = new ShowInformation(cedula,"");
-        shInf.setVisible(true);
-        shInf.pack();
-        shInf.setLocationRelativeTo(null); 
-        shInf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();
+    public void updatePatient() {
+        int row = jTable1.getSelectedRow();
+        if (row == -1) {
+            String info = "Please select a patient first!";
+            JOptionPane.showMessageDialog(null, info, "Error", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            String cedula = jTable1.getModel().getValueAt(row, 0).toString();
+            PatientGenericState updPat = new PatientGenericState(cedula);
+            this.dispose();
+        }
     }
-    
+
+    public void startNewAnalysis() {
+        int row = jTable1.getSelectedRow();
+        if (row == -1) {
+            String info = "Please select a patient first!";
+            JOptionPane.showMessageDialog(null, info, "Error", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            String id = jTable1.getModel().getValueAt(row, 0).toString();
+            String firstName = jTable1.getModel().getValueAt(row, 2).toString();
+            String lastName = jTable1.getModel().getValueAt(row, 3).toString();
+            String gender = jTable1.getModel().getValueAt(row, 4).toString();
+            String birdth = jTable1.getModel().getValueAt(row, 5).toString();
+            String weigth = jTable1.getModel().getValueAt(row, 7).toString();
+            String height = jTable1.getModel().getValueAt(row, 6).toString();
+
+            ShowInformation shInf = new ShowInformation();
+            shInf.setValues(id, firstName, lastName, gender, birdth, weigth, height);
+            shInf.createPane();
+            shInf.setVisible(true);
+            shInf.pack();
+            shInf.setLocationRelativeTo(null);
+            shInf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            this.dispose();
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
