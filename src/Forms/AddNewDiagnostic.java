@@ -50,7 +50,7 @@ public class AddNewDiagnostic extends javax.swing.JFrame {
         jTextField3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jTextField3.setForeground(new java.awt.Color(255, 255, 255));
         jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField3.setText("NEW DIAGNOSTIC");
+        jTextField3.setText("NEW DIAGNOSIS");
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);

@@ -121,7 +121,7 @@ public class ShowInformation extends javax.swing.JFrame {
         });
 
         buttonNewDiagnostic.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        buttonNewDiagnostic.setText("NEW DIAGNOSTIC");
+        buttonNewDiagnostic.setText("NEW DIAGNOSIS");
         buttonNewDiagnostic.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonNewDiagnosticActionPerformed(evt);
