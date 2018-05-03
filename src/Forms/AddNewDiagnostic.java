@@ -6,6 +6,7 @@
 package Forms;
 
 import Logic.ConnectionPostgres;
+import Logic.ErrorMessage;
 
 /**
  *
@@ -156,8 +157,14 @@ public class AddNewDiagnostic extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         ConnectionPostgres con = new ConnectionPostgres();
-        con.newDiagnosis(txtCedula.getText(), txtDiagnostic.getText(), txtMedication.getText());
-        cancel();
+        String diagnostic = txtDiagnostic.getText(), 
+               medication = txtMedication.getText();
+        if(diagnostic.isEmpty() || medication.isEmpty()){
+            (new ErrorMessage()).codeSwitch("Exception 005");
+        }else{
+            con.newDiagnosis(txtCedula.getText(), txtDiagnostic.getText(), txtMedication.getText());
+            cancel();
+        }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
