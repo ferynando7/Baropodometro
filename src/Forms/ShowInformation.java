@@ -8,8 +8,6 @@ package Forms;
 import Logic.ConnectionPostgres;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.util.ArrayList;
-
 /**
  *
  * @author cbust
@@ -19,15 +17,21 @@ public class ShowInformation extends javax.swing.JFrame {
     /**
      * Creates new form ShowInformation
      */
-    private int width = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
-    private int heigth = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
-    String id, firstName, lastName, gender, birdth, weigth, height;
+    private final int width = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
+    private final int heigth = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
+    private String id, firstName, lastName, gender, birdth, weigth, height;
 
-    public ShowInformation() {
+    /*
+    Creates new ShowInformation (Builder of the class).
+    */
+    public ShowInformation() { 
         initComponents();
         this.setLocation(width / 2 - this.getWidth() / 2, 0);
     }
 
+    /*
+    Method that sets the values of each attribute of the corresponding patient.
+    */
     public void setValues(String id, String firstName, String lastName,
             String gender, String birdth, String weigth, String height) {
         this.id = id;
@@ -39,6 +43,11 @@ public class ShowInformation extends javax.swing.JFrame {
         this.height = height;
     }
 
+    /*
+    Meyhod that allocates the data of the corresponding patient in a panel, so
+    that, the doctor can see each detail of the patient together with the date
+    of the last analysis.
+    */
     public ShowPersonalData setValuesPane() {
 
         ShowPersonalData pane = new ShowPersonalData();
@@ -59,6 +68,10 @@ public class ShowInformation extends javax.swing.JFrame {
         return pane;
     }
 
+    /*
+    Method that creates the panel where all the information of the corresponding
+    patient will be shown.
+    */
     public void createPane() {
         jTextField3.setText("PATIENT " + firstName + " " + lastName);
         ShowPersonalData pane = setValuesPane();
@@ -220,6 +233,10 @@ public class ShowInformation extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
+    /*
+    Method that allows the access to the information of the corresponding
+    patient each time a button is clicked.
+    */
     private void buttonInformationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonInformationActionPerformed
         ShowPersonalData pane = setValuesPane();
         jPanel2.removeAll();
@@ -228,6 +245,10 @@ public class ShowInformation extends javax.swing.JFrame {
         jPanel2.repaint();
     }//GEN-LAST:event_buttonInformationActionPerformed
 
+    /*
+    Method that allows the access to the previous diagnosis of the corresponding
+    patient each time a button is clicked.
+    */
     private void buttonDiagnosisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDiagnosisActionPerformed
         jPanel2.removeAll();
         Diagnostics diagnosis = new Diagnostics(id);
@@ -242,6 +263,10 @@ public class ShowInformation extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
 
+    /*
+    Method that allows the access to the window of register a new
+    patient each time a button is clicked.
+    */
     private void buttonNewDiagnosticActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNewDiagnosticActionPerformed
         AddNewDiagnostic addD = new AddNewDiagnostic(id);
         addD.setLocation(width / 2 - addD.getWidth() / 2, heigth / 2 - addD.getHeight() / 2);

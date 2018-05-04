@@ -300,10 +300,6 @@ public class NewPatientInsert extends javax.swing.JFrame implements PatientForm{
         this.dispose();
     }
 
-
-
-
-    
     
     /*Codigos de excepciones
     
@@ -311,8 +307,7 @@ public class NewPatientInsert extends javax.swing.JFrame implements PatientForm{
     002: Longitud de cadena no válida
     003: Numero de cedula no valido
     004: Valores negativos no aceptados
-    
-    
+
 
     */
     //Function that gets the string stored in ID textbox and validates it

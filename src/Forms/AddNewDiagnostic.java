@@ -15,7 +15,8 @@ import Logic.ErrorMessage;
 public class AddNewDiagnostic extends javax.swing.JFrame {
 
     /**
-     * Creates new form AddNewDiagnostic
+     * Creates new form AddNewDiagnostic (Builder of the class).
+     * @param id
      */
     public AddNewDiagnostic(String id) {
         initComponents();
@@ -155,6 +156,10 @@ public class AddNewDiagnostic extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
 
+    /*
+    Method that saves a new diagnostic in the database when a button is clicked
+    and returns an error message if any field is empty.
+    */
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         ConnectionPostgres con = new ConnectionPostgres();
         String diagnostic = txtDiagnostic.getText(), 
@@ -167,10 +172,16 @@ public class AddNewDiagnostic extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAddActionPerformed
 
+    /*
+    Method that cancels the register of a new diagnosis when a button is clicked.
+    */
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         cancel();
     }//GEN-LAST:event_btnCancelActionPerformed
     
+    /*
+    Method that closes the window used to register a new patient.
+    */
     private void cancel() {
         this.setVisible(false);
     }

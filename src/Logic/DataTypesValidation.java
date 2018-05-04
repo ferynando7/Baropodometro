@@ -11,10 +11,7 @@ package Logic;
  */
 public class DataTypesValidation {
 
-
-
     /*Validacion de la cédula*/
-
     public String validateID(String id){
 
         if (!id.isEmpty()){

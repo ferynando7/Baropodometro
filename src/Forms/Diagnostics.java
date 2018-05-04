@@ -6,18 +6,15 @@
 package Forms;
 
 import Logic.ConnectionPostgres;
-import javax.swing.JFrame;
-
 /**
  *
  * @author cbust
  */
 public class Diagnostics extends javax.swing.JPanel {
 
-    private int width = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
-
     /**
-     * Creates new form Diagnostics
+     * Creates new form Diagnostics (Builder of the class).
+     * @param id
      */
     public Diagnostics(String id) {
         initComponents();
