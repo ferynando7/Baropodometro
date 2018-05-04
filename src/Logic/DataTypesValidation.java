@@ -166,6 +166,9 @@ public class DataTypesValidation {
         }
     }
     
+    /*
+    Funcion que comprueba que la fecha no este vacia
+    */
     public String validateDate(String date) {
 
         if (date.isEmpty()) {
