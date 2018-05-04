@@ -124,15 +124,9 @@ public class Menu extends javax.swing.JFrame {
 //Opens a new Window that contains the form and function to register a new Patient
     
     private void btRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRegisterActionPerformed
-        /*NewPatient rgf = new NewPatient(0);
-        rgf.setVisible(true);
-        rgf.pack();
-        rgf.setLocationRelativeTo(null); 
-        rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();        // TODO add your handling code here:
-        */
+       
         PatientGenericState newPat = new PatientGenericState(0);
-        this.dispose();        // TODO add your handling code here:
+        this.dispose();      
     }//GEN-LAST:event_btRegisterActionPerformed
 
     //Opens a new Window that contains the form and function to display all registered patients
@@ -142,7 +136,7 @@ public class Menu extends javax.swing.JFrame {
         rgf.pack();
         rgf.setLocationRelativeTo(null); 
         rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();        // TODO add your handling code here:
+        this.dispose();       
     }//GEN-LAST:event_btListPatientsActionPerformed
 
     /**

@@ -13,6 +13,10 @@ import javax.swing.JOptionPane;
  */
 public class ErrorMessage {
     
+    
+    /*
+    Function that recevies a string and shows the correspondent error message
+    */
     public void codeSwitch(String errorCode){
         String message;
      switch(errorCode) {

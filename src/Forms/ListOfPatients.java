@@ -211,6 +211,9 @@ public class ListOfPatients extends javax.swing.JFrame {
         }
     }
 
+    /*
+    Funcion que elimina a un paciente de la base de datos
+    */
     public void deletePatient() {
         int row = jTable1.getSelectedRow();
         if (row == -1) {
@@ -228,6 +231,9 @@ public class ListOfPatients extends javax.swing.JFrame {
         }
     }
 
+    /*
+    Funcion que actualiza la informacion de un paciente de la base de datos
+    */
     public void updatePatient() {
         int row = jTable1.getSelectedRow();
         if (row == -1) {
@@ -240,6 +246,9 @@ public class ListOfPatients extends javax.swing.JFrame {
         }
     }
 
+    /*
+    Funcion que llama al ambiente de nuevo analisis
+    */
     public void startNewAnalysis() {
         int row = jTable1.getSelectedRow();
         if (row == -1) {
