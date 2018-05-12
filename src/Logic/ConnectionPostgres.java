@@ -27,8 +27,8 @@ public class ConnectionPostgres {
         try {
             Class.forName("org.postgresql.Driver");
             c = DriverManager
-                    .getConnection("jdbc:postgresql://localhost/baropodometro",
-                            "postgres", "bestintheworld");
+                    .getConnection("jdbc:postgresql://localhost/Baropodometro",
+                            "postgres", "1234");
         } catch (Exception e) {
             String error = ((new DBExceptions()).conexionError());
             JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
@@ -64,6 +64,9 @@ public class ConnectionPostgres {
         }
     }
 
+    /*
+    Funcion que actualiza el registro de un paciente
+    */
     public void updateData(String values) {
         //values debe estar en el formato correspondiente SQL
         String[] datosSplit = values.split(",");
@@ -122,6 +125,9 @@ public class ConnectionPostgres {
         return datos;
     }
 
+    /*
+    Funcion que recupera los datos de un paciente en particular
+    */
     public String recoverPatient(String id) {
         Connection c;
 

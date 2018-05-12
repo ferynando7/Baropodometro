@@ -29,7 +29,7 @@ public class DataTypesValidationTest {
     }
 
     /**
-     * Test of validateID method, of class DataTypesValidation.
+     * Test of validateID method, of class DataTypesValidation. Used to validate the ID of the patient
      */
     @Test
     public void testValidateID() {
@@ -45,7 +45,7 @@ public class DataTypesValidationTest {
     }
 
     /**
-     * Test of validateDouble method, of class DataTypesValidation.Used to validate the Weight of the patient
+     * Test of validateDouble method, of class DataTypesValidation. Used to validate the Weight of the patient
      */
     @Test
     public void testValidateDouble (){
@@ -59,7 +59,9 @@ public class DataTypesValidationTest {
     }
 
 
-
+    /**
+     * Test of validateHeight method, of class DataTypesValidation. Used to validate the height of the patient
+     */
     @Test
     public void testValidateHeight() {
         System.out.println("getTextHeight");
@@ -71,6 +73,9 @@ public class DataTypesValidationTest {
         assertEquals("Non numeric", instance.validateIntegers("s34k",220));
     }
 
+    /**
+     * Test of validateNames method, of class DataTypesValidation. Used to validate the names of the patient
+     */
     @Test
     public void testValidateNames() {
         DataTypesValidation instance = new DataTypesValidation();

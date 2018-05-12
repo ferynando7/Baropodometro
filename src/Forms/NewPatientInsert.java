@@ -245,7 +245,9 @@ public class NewPatientInsert extends javax.swing.JFrame implements PatientForm{
        savePatient();
     }//GEN-LAST:event_btSaveActionPerformed
 
-    
+    /*
+    Funcion que cancela la actualizacin y retorna a la pantalla anterior
+    */
     @Override
     public void cancelRegister() {
         Menu rgf = new Menu();
@@ -257,6 +259,9 @@ public class NewPatientInsert extends javax.swing.JFrame implements PatientForm{
         this.dispose();
     }
 
+    /*
+    Funcion que guarda los datos del paciente
+    */
     @Override
     public void savePatient() {
         String cedula = getTextID();
@@ -300,21 +305,8 @@ public class NewPatientInsert extends javax.swing.JFrame implements PatientForm{
         this.dispose();
     }
 
+  
 
-
-
-    
-    
-    /*Codigos de excepciones
-    
-    001: Tipo de dato no válido
-    002: Longitud de cadena no válida
-    003: Numero de cedula no valido
-    004: Valores negativos no aceptados
-    
-    
-
-    */
     //Function that gets the string stored in ID textbox and validates it
    public String getTextID(){
         String id = validate.validateID(ID.getText());
@@ -323,25 +315,28 @@ public class NewPatientInsert extends javax.swing.JFrame implements PatientForm{
         return id;
     }
 
-
+   //Function that gets the string stored in weight textbox and validates it
     public String getTextWeight(){
         String weight = validate.validateDouble(Weight.getText());
         errors.codeSwitch(weight);
         return weight;
     }
     
+    //Function that gets the string stored in height textbox and validates it
     public String getTextHeight() {
         String height = validate.validateIntegers(Height.getText(), 220);
         errors.codeSwitch(height);
         return height;
     }
     
+    //Function that gets the string stored in name textbox and validates it
     public String getTextFName() {
         String fName = validate.validateNames(FName.getText());
         errors.codeSwitch(fName);
         return fName;
     }
-    
+ 
+    //Function that gets the string stored in lastName textbox and validates it
     public String getTextLName() {
         String lName = validate.validateNames(LName.getText());
         errors.codeSwitch(lName);

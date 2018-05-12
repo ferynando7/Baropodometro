@@ -11,10 +11,7 @@ package Logic;
  */
 public class DataTypesValidation {
 
-
-
     /*Validacion de la cédula*/
-
     public String validateID(String id){
 
         if (!id.isEmpty()){
@@ -68,7 +65,7 @@ public class DataTypesValidation {
     codigo de una provincia de Ecuador, o que pertenezca a una persona extranjera
     que posee numero de cedula*/
     private static boolean codProvCorrect(String cadena){
-        String twoFirstDigits = cadena.substring(0,1);
+        String twoFirstDigits = cadena.substring(0,2);
         int digits = Integer.parseInt(twoFirstDigits);
         if((digits>0 && digits<25) || digits == 30){
             return true;
@@ -169,6 +166,9 @@ public class DataTypesValidation {
         }
     }
     
+    /*
+    Funcion que comprueba que la fecha no este vacia
+    */
     public String validateDate(String date) {
 
         if (date.isEmpty()) {
