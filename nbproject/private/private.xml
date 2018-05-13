@@ -3,10 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/cbust/Documents/NetBeansProjects/Baropodometro/src/Logic/DataTypesValidation.java</file>
-            <file>file:/C:/Users/cbust/Documents/NetBeansProjects/Baropodometro/src/Forms/ShowInformation.java</file>
-            <file>file:/C:/Users/cbust/Documents/NetBeansProjects/Baropodometro/src/Forms/NewPatientInsert.java</file>
-            <file>file:/C:/Users/cbust/Documents/NetBeansProjects/Baropodometro/src/Logic/ErrorMessage.java</file>
+            <file>file:/home/ferynando7/NetBeansProjects/Baropodometro/src/Logic/Patient.java</file>
+            <file>file:/home/ferynando7/NetBeansProjects/Baropodometro/src/Forms/NewPatientInsert.java</file>
+            <file>file:/home/ferynando7/NetBeansProjects/Baropodometro/src/Logic/PatientRecord.java</file>
+            <file>file:/home/ferynando7/NetBeansProjects/Baropodometro/src/Logic/BaropSample.java</file>
         </group>
     </open-files>
 </project-private>

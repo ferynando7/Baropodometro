@@ -5,7 +5,6 @@
  */
 package Forms;
 
-import Logic.ConnectionPostgres;
 import Logic.DataTypesValidation;
 import javax.swing.JFrame;
 import com.toedter.calendar.JDateChooser;
@@ -15,6 +14,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import Logic.ErrorMessage;
+import Logic.Patient;
 import Logic.PatientForm;
 import java.util.Date;
 import java.util.logging.Level;
@@ -289,13 +289,10 @@ public class NewPatientInsert extends javax.swing.JFrame implements PatientForm{
 
         String peso = getTextWeight();
         if (peso.contains("Exception")) return;
+        
+        Patient patient = new Patient(cedula, altura, nombre, apellido, genero, fechNac, "", "", peso);
 
-        String values = "'" + cedula +  "','" + nombre + "','" + apellido + "','" + genero + "','" + fechNac + "'," + altura + "," + peso + ", ' ' , ' '";
-
-        ConnectionPostgres newConnection = new ConnectionPostgres();
-        System.out.println(values);
-
-        newConnection.insertData(values);
+        patient.savePatient();
         Menu rgf = new Menu();
 
         rgf.setVisible(true);
